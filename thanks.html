@@ -40,25 +40,47 @@
             background-color: #000000;
             border: 1px solid #ffffff;
             color: #ffffff;
-            padding: 12px 24px;
+            padding: 14px 24px; /* Larger for touch */
             font-size: 14px;
             cursor: pointer;
             text-transform: uppercase;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(255,255,255,0.1);
             transition: all 0.3s ease;
+            min-height: 48px; /* Touch-friendly */
         }
         button:hover {
             background-color: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(255,255,255,0.2);
         }
+        /* Mobile styles */
         @media (max-width: 768px) {
             .thanks-container {
                 padding: 20px;
+                margin: 20px;
             }
             h1 {
                 font-size: 24px;
+            }
+            p {
+                font-size: 14px;
+            }
+            button {
+                padding: 16px 24px;
+                font-size: 16px;
+                width: 100%; /* Full width for easy tap */
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .thanks-container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 20px;
             }
         }
     </style>
