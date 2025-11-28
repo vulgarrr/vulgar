@@ -113,6 +113,47 @@
             font-size: 18px;
             margin-bottom: 20px;
         }
+        .size-options {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: nowrap; /* Keep in a single row */
+        }
+        .size-option {
+            position: relative;
+        }
+        .size-option input {
+            display: none;
+        }
+        .size-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(145deg, #000000, #111111);
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 300;
+            text-transform: uppercase;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 8px rgba(255,255,255,0.1);
+        }
+        .size-option label:hover {
+            background: linear-gradient(145deg, #222222, #333333);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(255,255,255,0.2);
+        }
+        .size-option input:checked + label {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+        }
         .buttons {
             display: flex;
             justify-content: center;
@@ -243,6 +284,14 @@
                 margin-right: 0;
                 margin-bottom: 10px;
             }
+            .size-options {
+                gap: 6px;
+            }
+            .size-option label {
+                width: 55px;
+                height: 55px;
+                font-size: 18px; /* Slightly larger for touch */
+            }
         }
     </style>
 </head>
@@ -269,6 +318,24 @@
                 <div class="product-details">
                     <div class="product-name">SRK Leather Jacket</div>
                     <div class="product-price">L.E 1499</div>
+                    <div class="size-options">
+                        <div class="size-option">
+                            <input type="radio" id="size-s" name="jacket-size" value="S">
+                            <label for="size-s">S</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="size-m" name="jacket-size" value="M">
+                            <label for="size-m">M</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="size-l" name="jacket-size" value="L">
+                            <label for="size-l">L</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="size-xl" name="jacket-size" value="XL">
+                            <label for="size-xl">XL</label>
+                        </div>
+                    </div>
                     <div class="buttons">
                         <button onclick="addToCart('jacket')">Add to Cart</button>
                         <button onclick="buyNow('jacket')">Buy Now</button>
@@ -302,14 +369,25 @@
             document.getElementById('cart-count').textContent = cart.length;
         }
 
+        function getSelectedSize(productType) {
+            const radios = document.querySelectorAll(`input[name="${productType}-size"]:checked`);
+            return radios.length > 0 ? radios[0].value : null;
+        }
+
         function addToCart(productType) {
+            const selectedSize = getSelectedSize(productType);
+            if (!selectedSize) {
+                alert('Please select a size.');
+                return;
+            }
             let item;
             if (productType === 'jacket') {
                 item = {
                     name: 'SRK Leather Jacket',
                     price: 1499,
                     image: 'https://res.cloudinary.com/ds9bldncb/image/upload/v1763588866/srk_leather_jacket_ubwf48.png',
-                    quantity: 1
+                    quantity: 1,
+                    size: selectedSize
                 };
             }
             cart.push(item);
@@ -319,13 +397,19 @@
         }
 
         function buyNow(productType) {
+            const selectedSize = getSelectedSize(productType);
+            if (!selectedSize) {
+                alert('Please select a size.');
+                return;
+            }
             let item;
             if (productType === 'jacket') {
                 item = {
                     name: 'SRK Leather Jacket',
                     price: 1499,
                     image: 'https://res.cloudinary.com/ds9bldncb/image/upload/v1763588866/srk_leather_jacket_ubwf48.png',
-                    quantity: 1
+                    quantity: 1,
+                    size: selectedSize
                 };
             }
             cart = [item]; // Directly set cart to this item for Buy Now
@@ -355,7 +439,7 @@
                     <div class="cart-item">
                         <img src="${item.image}" alt="${item.name}">
                         <div class="cart-item-details">
-                            <div>${item.name}</div>
+                            <div>${item.name} (Size: ${item.size})</div>
                             <div>L.E ${item.price}</div>
                             <div class="quantity-controls">
                                 <button onclick="changeQuantity(${index}, -1)">-</button>
