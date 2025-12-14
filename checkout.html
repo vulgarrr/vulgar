@@ -3,153 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - VULGAR</title>
+    <title>Checkout - Negm Apparel</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            margin: 0;
-            padding: 0;
-            background-color: #000000;
-            color: #ffffff;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #000000;
-            border-bottom: 1px solid #333333;
-        }
-        .brand img {
-            height: 60px;
-            filter: brightness(0) invert(1);
-        }
-        nav {
-            display: flex;
-            gap: 20px;
-        }
-        nav a {
-            text-decoration: none;
-            color: #ffffff;
-            font-size: 14px;
-            text-transform: uppercase;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-        .checkout-container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-        .cart-summary {
-            margin-bottom: 40px;
-        }
-        .cart-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #333333;
-            padding-bottom: 20px;
-        }
-        .cart-item img {
-            width: 80px;
-            height: auto;
-            margin-right: 20px;
-        }
-        .cart-item-details {
-            flex-grow: 1;
-        }
-        .cart-total {
-            font-size: 18px;
-            font-weight: 300;
-            margin-bottom: 20px;
-        }
-        .form-section {
-            margin-bottom: 40px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            background-color: #000000;
-            border: 1px solid #ffffff;
-            color: #ffffff;
-            border-radius: 8px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #cccccc;
-        }
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        button {
-            background-color: #000000;
-            border: 1px solid #ffffff;
-            color: #ffffff;
-            padding: 14px 24px;
-            font-size: 14px;
-            cursor: pointer;
-            text-transform: uppercase;
-            border-radius: 8px;
-            flex: 1;
-            min-width: 150px;
-            min-height: 48px;
-            transition: all 0.3s ease;
-        }
-        button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-        }
-        .error {
-            color: #ff0000;
-            margin-top: 10px;
-        }
-        @media (max-width: 768px) {
-            .cart-item {
-                flex-direction: column;
-                text-align: center;
-            }
-            .cart-item img {
-                margin-right: 0;
-                margin-bottom: 10px;
-                width: 100px;
-            }
-            .buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-            input, textarea {
-                font-size: 16px;
-            }
-        }
+        body { font-family: 'Montserrat', sans-serif; font-weight: 300; margin: 0; padding: 0; background-color: #000000; color: #ffffff; font-size: 14px; line-height: 1.5; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #000000; border-bottom: 1px solid #333333; }
+        .brand img { height: 60px; filter: brightness(0) invert(1); }
+        nav { display: flex; gap: 20px; }
+        nav a { text-decoration: none; color: #ffffff; font-size: 14px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .checkout-container { max-width: 800px; margin: 40px auto; padding: 20px; }
+        .cart-summary { margin-bottom: 40px; }
+        .cart-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333333; padding-bottom: 20px; }
+        .cart-item img { width: 80px; height: auto; margin-right: 20px; }
+        .cart-item-details { flex-grow: 1; }
+        .cart-total { font-size: 18px; font-weight: 300; margin-bottom: 20px; }
+        .form-section { margin-bottom: 40px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-size: 14px; }
+        input, textarea { width: 100%; padding: 12px; background-color: #000000; border: 1px solid #ffffff; color: #ffffff; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 14px; box-sizing: border-box; }
+        input:focus, textarea:focus { outline: none; border-color: #cccccc; }
+        .buttons { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+        button { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 14px 24px; font-size: 14px; cursor: pointer; text-transform: uppercase; border-radius: 8px; flex: 1; min-width: 150px; min-height: 48px; transition: all 0.3s ease; }
+        button:hover { background-color: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
+        .error { color: #ff0000; margin-top: 10px; }
+        @media (max-width: 768px) { .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; width: 100px; } .buttons { flex-direction: column; gap: 15px; } input, textarea { font-size: 16px; } }
     </style>
+    <!-- EmailJS Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/emailjs.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("Z8d_VqphAexkv8xZL");  // Your public key
+        })();
+    </script>
 </head>
 <body>
     <header>
-        <div class="brand"><a href="index.html"><img src="https://res.cloudinary.com/ds9bldncb/image/upload/v1763589017/logo_for_the_website_pbsszm.png" alt="VULGAR"></a></div>
+        <div class="brand"><a href="index.html"><img src="https://res.cloudinary.com/ds9bldncb/image/upload/v1763589017/logo_for_the_website_pbsszm.png" alt="Negm Apparel"></a></div>
         <nav>
             <a href="index.html#product">Shop</a>
             <a href="index.html#cart">Cart</a>
         </nav>
     </header>
-
     <div class="checkout-container">
         <h1>Checkout</h1>
         <div class="cart-summary">
@@ -157,7 +51,7 @@
             <div id="cart-items"></div>
             <div id="cart-total" class="cart-total"></div>
         </div>
-
+        <!-- IMPORTANT: no action="" and no method="" -->
         <form id="checkout-form" class="form-section">
             <div class="form-group">
                 <label for="first-name">First Name</label>
@@ -179,22 +73,13 @@
                 <label for="address">Address</label>
                 <textarea id="address" name="address" rows="4" required></textarea>
             </div>
-
             <div class="buttons">
                 <button type="button" onclick="backToCart()">Back to Cart</button>
                 <button type="submit">Confirm Order</button>
             </div>
-
             <div id="error-message" class="error" style="display:none;"></div>
         </form>
     </div>
-
-    <!-- EMAILJS SCRIPT -->
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script>
-        emailjs.init("Z8d_VqphAexkv8xZL"); // Public Key
-    </script>
-
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -203,21 +88,19 @@
             const cartTotal = document.getElementById('cart-total');
             cartItems.innerHTML = '';
             let total = 0;
-
             cart.forEach((item) => {
                 total += item.price * item.quantity;
                 cartItems.innerHTML += `
                     <div class="cart-item">
                         <img src="${item.image}" alt="${item.name}">
                         <div class="cart-item-details">
-                            <div>${item.name} (Size: ${item.size})</div>
+                            <div>${item.name}</div>
                             <div>Quantity: ${item.quantity}</div>
                             <div>L.E ${item.price * item.quantity}</div>
                         </div>
                     </div>
                 `;
             });
-
             cartTotal.innerHTML = `<strong>Total: L.E ${total}</strong>`;
         }
 
@@ -227,64 +110,56 @@
 
         document.getElementById('checkout-form').addEventListener('submit', function(e) {
             e.preventDefault();
-
-            if(cart.length === 0){
-                alert("Your cart is empty.");
-                return;
-            }
-
             const formData = new FormData(this);
             formData.append('cart', JSON.stringify(cart));
 
-            // Build email parameters
-            const emailParams = {
-                customer_name: formData.get('first-name') + " " + formData.get('surname'),
-                customer_email: formData.get('email'),
-                product_name: cart.map(item => item.name + " (Size: " + item.size + ")").join(", "),
-                quantity: cart.reduce((sum, item) => sum + item.quantity, 0),
-                total_price: "L.E " + cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
-                order_id: "VG" + Math.floor(Math.random() * 100000)
-            };
+            // Submit to Formspree
+            fetch('https://formspree.io/f/mwpaeola', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Formspree success - now send confirmation email
+                    const firstName = document.getElementById('first-name').value;
+                    const surname = document.getElementById('surname').value;
+                    const customerEmail = document.getElementById('email').value;
+                    const customerName = `${firstName} ${surname}`;
+                    const itemDetails = cart.map(item => `${item.name} (Qty: ${item.quantity})`).join(", ");
+                    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+                    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-            // Send email via EmailJS
-            emailjs.send("service_gmail_vulgar", "template_wjjp954", emailParams)
-            .then(() => {
-                // Submit to Formspree
-                fetch('https://formspree.io/f/mwpaeola', {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                })
-                .then(response => {
-                    if(response.ok){
+                    // Send email via EmailJS
+                    emailjs.send("service_gmail_vulgar", "template_wjjp954", {
+                        to_email: customerEmail,
+                        customerName: customerName,
+                        orderId: "AUTO-" + Date.now(),
+                        itemName: itemDetails,
+                        quantity: totalQuantity,
+                        totalPrice: totalPrice,
+                        deliveryDate: "Within 5-7 business days",
+                        trackingLink: "https://yourtrackinglink.com"  // Replace with real link
+                    }).then(function(response) {
+                        console.log('Email sent successfully:', response);
+                        // Clear cart and redirect
                         localStorage.removeItem('cart');
                         window.location.href = 'thanks.html';
-                    } else {
-                        throw new Error('Submission failed');
-                    }
-                })
-                .catch(error => {
-                    document.getElementById('error-message').textContent =
-                        'There was an error submitting your order. Please try again.';
-                    document.getElementById('error-message').style.display = 'block';
-                });
+                    }).catch(function(error) {
+                        console.error('EmailJS Error:', error);
+                        alert('Order submitted, but email confirmation failed. Check your email later or contact support.');
+                        // Still clear cart and redirect since Formspree worked
+                        localStorage.removeItem('cart');
+                        window.location.href = 'thanks.html';
+                    });
+                } else {
+                    throw new Error('Formspree submission failed');
+                }
             })
-            .catch(err => {
-                console.error("EmailJS error:", err);
-                document.getElementById('error-message').textContent =
-                    'Order could not send confirmation email, but it was submitted.';
+            .catch(error => {
+                document.getElementById('error-message').textContent = 'There was an error submitting your order. Please try again.';
                 document.getElementById('error-message').style.display = 'block';
-
-                // Still submit to Formspree
-                fetch('https://formspree.io/f/mwpaeola', {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                })
-                .then(() => {
-                    localStorage.removeItem('cart');
-                    window.location.href = 'thanks.html';
-                });
+                console.error('Formspree Error:', error);
             });
         });
 
@@ -292,4 +167,3 @@
     </script>
 </body>
 </html>
-
