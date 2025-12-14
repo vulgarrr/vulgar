@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Negm Apparel</title>
+    <title>Checkout - VULGAR</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <style>
         body {
@@ -143,7 +143,7 @@
 </head>
 <body>
     <header>
-        <div class="brand"><a href="index.html"><img src="https://res.cloudinary.com/ds9bldncb/image/upload/v1763589017/logo_for_the_website_pbsszm.png" alt="Negm Apparel"></a></div>
+        <div class="brand"><a href="index.html"><img src="https://res.cloudinary.com/ds9bldncb/image/upload/v1763589017/logo_for_the_website_pbsszm.png" alt="VULGAR"></a></div>
         <nav>
             <a href="index.html#product">Shop</a>
             <a href="index.html#cart">Cart</a>
@@ -158,7 +158,6 @@
             <div id="cart-total" class="cart-total"></div>
         </div>
 
-        <!-- IMPORTANT: no action="" and no method="" -->
         <form id="checkout-form" class="form-section">
             <div class="form-group">
                 <label for="first-name">First Name</label>
@@ -190,6 +189,12 @@
         </form>
     </div>
 
+    <!-- EMAILJS SCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("Z8d_VqphAexkv8xZL"); // Public Key
+    </script>
+
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -205,7 +210,7 @@
                     <div class="cart-item">
                         <img src="${item.image}" alt="${item.name}">
                         <div class="cart-item-details">
-                            <div>${item.name}</div>
+                            <div>${item.name} (Size: ${item.size})</div>
                             <div>Quantity: ${item.quantity}</div>
                             <div>L.E ${item.price * item.quantity}</div>
                         </div>
@@ -223,28 +228,63 @@
         document.getElementById('checkout-form').addEventListener('submit', function(e) {
             e.preventDefault();
 
+            if(cart.length === 0){
+                alert("Your cart is empty.");
+                return;
+            }
+
             const formData = new FormData(this);
             formData.append('cart', JSON.stringify(cart));
 
-            fetch('https://formspree.io/f/mwpaeola', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
+            // Build email parameters
+            const emailParams = {
+                customer_name: formData.get('first-name') + " " + formData.get('surname'),
+                customer_email: formData.get('email'),
+                product_name: cart.map(item => item.name + " (Size: " + item.size + ")").join(", "),
+                quantity: cart.reduce((sum, item) => sum + item.quantity, 0),
+                total_price: "L.E " + cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+                order_id: "VG" + Math.floor(Math.random() * 100000)
+            };
+
+            // Send email via EmailJS
+            emailjs.send("service_gmail_vulgar", "template_wjjp954", emailParams)
+            .then(() => {
+                // Submit to Formspree
+                fetch('https://formspree.io/f/mwpaeola', {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(response => {
+                    if(response.ok){
+                        localStorage.removeItem('cart');
+                        window.location.href = 'thanks.html';
+                    } else {
+                        throw new Error('Submission failed');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('error-message').textContent =
+                        'There was an error submitting your order. Please try again.';
+                    document.getElementById('error-message').style.display = 'block';
+                });
             })
-            .then(response => {
-                if (response.ok) {
+            .catch(err => {
+                console.error("EmailJS error:", err);
+                document.getElementById('error-message').textContent =
+                    'Order could not send confirmation email, but it was submitted.';
+                document.getElementById('error-message').style.display = 'block';
+
+                // Still submit to Formspree
+                fetch('https://formspree.io/f/mwpaeola', {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(() => {
                     localStorage.removeItem('cart');
                     window.location.href = 'thanks.html';
-                } else {
-                    throw new Error('Submission failed');
-                }
-            })
-            .catch(error => {
-                document.getElementById('error-message').textContent =
-                    'There was an error submitting your order. Please try again.';
-                document.getElementById('error-message').style.display = 'block';
+                });
             });
         });
 
@@ -252,3 +292,4 @@
     </script>
 </body>
 </html>
+
