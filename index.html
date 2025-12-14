@@ -1,506 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Negm Apparel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            margin: 0;
-            padding: 0;
-            background-color: #000000;
-            color: #ffffff;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        .video-banner {
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-        .video-banner video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-        header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-        }
-        .brand img {
-            height: 80px; /* Increased from 50px to 80px for a bigger logo */
-            filter: brightness(0) invert(1); /* Makes logo white if needed for contrast */
-        }
-        nav {
-            display: flex;
-            gap: 20px;
-        }
-        nav a {
-            text-decoration: none;
-            color: #ffffff;
-            font-size: 14px;
-            text-transform: uppercase;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-        .cart-count {
-            background-color: #ffffff;
-            color: #000000;
-            padding: 2px 6px;
-            border-radius: 50%;
-            font-size: 12px;
-        }
-        .shop-now-btn {
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.9);
-            border: 1px solid #ffffff;
-            color: #ffffff;
-            padding: 12px 24px;
-            font-size: 16px;
-            cursor: pointer;
-            text-transform: uppercase;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-        }
-        .shop-now-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translate(-50%, -50%) translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255,255,255,0.2);
-        }
-        .product-section {
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .products-grid {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .product {
-            max-width: 300px;
-            text-align: center;
-        }
-        .product-image {
-            width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
-        .product-details {
-            margin-bottom: 20px;
-        }
-        .product-name {
-            font-size: 20px;
-            font-weight: 300;
-            margin-bottom: 10px;
-        }
-        .product-price {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-        .size-options {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-wrap: nowrap; /* Keep in a single row */
-        }
-        .size-option {
-            position: relative;
-        }
-        .size-option input {
-            display: none;
-        }
-        .size-option label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(145deg, #000000, #111111);
-            border: 1px solid #ffffff;
-            color: #ffffff;
-            font-size: 16px;
-            font-weight: 300;
-            text-transform: uppercase;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 8px rgba(255,255,255,0.1);
-        }
-        .size-option label:hover {
-            background: linear-gradient(145deg, #222222, #333333);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(255,255,255,0.2);
-        }
-        .size-option input:checked + label {
-            background: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
-            box-shadow: 0 0 15px rgba(255,255,255,0.5);
-        }
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        button {
-            background-color: #000000;
-            border: 1px solid #ffffff;
-            color: #ffffff;
-            padding: 10px 20px;
-            font-size: 14px;
-            cursor: pointer;
-            text-transform: uppercase;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-        }
-        button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(255,255,255,0.2);
-        }
-        .cart-section {
-            display: none;
-            padding: 40px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #000000;
-            color: #ffffff;
-        }
-        .cart-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #333333;
-            padding-bottom: 20px;
-        }
-        .cart-item img {
-            width: 100px;
-            height: auto;
-            margin-right: 20px;
-        }
-        .cart-item-details {
-            flex-grow: 1;
-        }
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-        .modal-content {
-            background-color: #000000;
-            color: #ffffff;
-            border: 1px solid #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(255,255,255,0.3);
-            text-align: center;
-            max-width: 300px;
-            width: 90%;
-            position: relative;
-        }
-        .modal-content h3 {
-            margin: 0 0 10px 0;
-            font-size: 18px;
-        }
-        .modal-content p {
-            margin: 0 0 20px 0;
-            font-size: 14px;
-        }
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: #ffffff;
-            cursor: pointer;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @media (max-width: 768px) {
-            header {
-                padding: 15px;
-            }
-            nav {
-                gap: 10px;
-            }
-            .shop-now-btn {
-                top: 70%;
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-            .products-grid {
-                flex-direction: column;
-                align-items: center;
-                gap: 20px;
-            }
-            .product {
-                max-width: 100%;
-            }
-            .buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            .cart-item {
-                flex-direction: column;
-                text-align: center;
-            }
-            .cart-item img {
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
-            .size-options {
-                gap: 6px;
-            }
-            .size-option label {
-                width: 55px;
-                height: 55px;
-                font-size: 18px; /* Slightly larger for touch */
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VULGAR Checkout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { text-align: center; margin-bottom: 30px; }
+    form { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+    input { padding: 10px; font-size: 16px; border-radius: 6px; border: 1px solid #fff; background: #111; color: #fff; }
+    button { padding: 12px; font-size: 16px; background: #000; border: 1px solid #fff; color: #fff; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #111; }
+  </style>
 </head>
 <body>
-    <section class="video-banner">
-        <video autoplay loop muted playsinline>
-            <source src="https://res.cloudinary.com/ds9bldncb/video/upload/v1764274915/ssstik.io_1764272048537_gdetmv.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <header>
-            <div class="brand"><a href="#product" onclick="goToMain()"><img src="https://res.cloudinary.com/ds9bldncb/image/upload/v1763589017/logo_for_the_website_pbsszm.png" alt="Negm Apparel"></a></div>
-            <nav>
-                <a href="#product" onclick="goToMain()">Shop</a>
-                <a href="#cart" onclick="showCart()">Cart <span id="cart-count" class="cart-count">0</span></a>
-            </nav>
-        </header>
-        <button class="shop-now-btn" onclick="scrollToProducts()">Shop Now</button>
-    </section>
 
-    <section id="product" class="product-section">
-        <div class="products-grid">
-            <div class="product">
-                <img src="https://res.cloudinary.com/ds9bldncb/image/upload/v1763588866/srk_leather_jacket_ubwf48.png" alt="SRK Leather Jacket" class="product-image">
-                <div class="product-details">
-                    <div class="product-name">SRK Leather Jacket</div>
-                    <div class="product-price">L.E 1499</div>
-                    <div class="size-options">
-                        <div class="size-option">
-                            <input type="radio" id="size-s" name="jacket-size" value="S">
-                            <label for="size-s">S</label>
-                        </div>
-                        <div class="size-option">
-                            <input type="radio" id="size-m" name="jacket-size" value="M">
-                            <label for="size-m">M</label>
-                        </div>
-                        <div class="size-option">
-                            <input type="radio" id="size-l" name="jacket-size" value="L">
-                            <label for="size-l">L</label>
-                        </div>
-                        <div class="size-option">
-                            <input type="radio" id="size-xl" name="jacket-size" value="XL">
-                            <label for="size-xl">XL</label>
-                        </div>
-                    </div>
-                    <div class="buttons">
-                        <button onclick="addToCart('jacket')">Add to Cart</button>
-                        <button onclick="buyNow('jacket')">Buy Now</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <h1>VULGAR Checkout</h1>
 
-    <section id="cart" class="cart-section">
-        <h2>Your Cart</h2>
-        <div id="cart-items"></div>
-        <div id="cart-total"></div>
-        <button onclick="clearCart()">Clear Cart</button>
-        <button onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
-        <button onclick="backToShop()">Back to Shop</button>
-    </section>
+  <form id="checkoutForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <input type="text" name="customer_name" placeholder="Full Name" required>
+    <input type="email" name="customer_email" placeholder="Email" required>
+    <input type="text" name="product_name" id="product_name" readonly>
+    <input type="number" name="quantity" id="quantity" readonly>
+    <input type="text" name="total_price" id="total_price" readonly>
+    <button type="submit">Confirm Order</button>
+  </form>
 
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">×</button>
-            <h3>Item Added!</h3>
-            <p>Your item has been added to the cart.</p>
-        </div>
-    </div>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    // Initialize EmailJS
+    emailjs.init("Z8d_VqphAexkv8xZL"); // your public key
 
-    <script>
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // Load cart from localStorage and prefill checkout form
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if(cart.length > 0){
+      const item = cart[0]; // For simplicity, only first item in cart
+      document.getElementById('product_name').value = item.name + " (Size: " + item.size + ")";
+      document.getElementById('quantity').value = item.quantity;
+      document.getElementById('total_price').value = item.price * item.quantity + " L.E";
+    }
 
-        function updateCartCount() {
-            document.getElementById('cart-count').textContent = cart.length;
-        }
+    document.getElementById("checkoutForm").addEventListener("submit", function(e){
+      e.preventDefault();
 
-        function getSelectedSize(productType) {
-            const radios = document.querySelectorAll(`input[name="${productType}-size"]:checked`);
-            return radios.length > 0 ? radios[0].value : null;
-        }
+      const orderId = "VG" + Math.floor(Math.random() * 100000);
 
-        function addToCart(productType) {
-            const selectedSize = getSelectedSize(productType);
-            if (!selectedSize) {
-                alert('Please select a size.');
-                return;
-            }
-            let item;
-            if (productType === 'jacket') {
-                item = {
-                    name: 'SRK Leather Jacket',
-                    price: 1499,
-                    image: 'https://res.cloudinary.com/ds9bldncb/image/upload/v1763588866/srk_leather_jacket_ubwf48.png',
-                    quantity: 1,
-                    size: selectedSize
-                };
-            }
-            cart.push(item);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            showModal();
-        }
+      emailjs.send("service_gmail_vulgar", "template_wjjp954", {
+        customer_name: this.customer_name.value,
+        customer_email: this.customer_email.value,
+        product_name: this.product_name.value,
+        quantity: this.quantity.value,
+        total_price: this.total_price.value,
+        order_id: orderId
+      })
+      .then(() => {
+        alert("Order confirmed! Check your email 📩");
+        this.submit(); // submit to Formspree after email
+        localStorage.removeItem('cart'); // clear cart after checkout
+      })
+      .catch((error) => {
+        alert("Email failed but order submitted.");
+        console.error(error);
+        this.submit();
+        localStorage.removeItem('cart');
+      });
+    });
+  </script>
 
-        function buyNow(productType) {
-            const selectedSize = getSelectedSize(productType);
-            if (!selectedSize) {
-                alert('Please select a size.');
-                return;
-            }
-            let item;
-            if (productType === 'jacket') {
-                item = {
-                    name: 'SRK Leather Jacket',
-                    price: 1499,
-                    image: 'https://res.cloudinary.com/ds9bldncb/image/upload/v1763588866/srk_leather_jacket_ubwf48.png',
-                    quantity: 1,
-                    size: selectedSize
-                };
-            }
-            cart = [item]; // Directly set cart to this item for Buy Now
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            window.location.href = 'checkout.html'; // Navigate to checkout page
-        }
-
-        function scrollToProducts() {
-            document.getElementById('product').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function showCart() {
-            document.querySelector('.product-section').style.display = 'none';
-            document.querySelector('.cart-section').style.display = 'block';
-            renderCart();
-        }
-
-        function renderCart() {
-            const cartItems = document.getElementById('cart-items');
-            const cartTotal = document.getElementById('cart-total');
-            cartItems.innerHTML = '';
-            let total = 0;
-            cart.forEach((item, index) => {
-                total += item.price * item.quantity;
-                cartItems.innerHTML += `
-                    <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="cart-item-details">
-                            <div>${item.name} (Size: ${item.size})</div>
-                            <div>L.E ${item.price}</div>
-                            <div class="quantity-controls">
-                                <button onclick="changeQuantity(${index}, -1)">-</button>
-                                <span>${item.quantity}</span>
-                                <button onclick="changeQuantity(${index}, 1)">+</button>
-                            </div>
-                            <button onclick="removeItem(${index})">Remove</button>
-                        </div>
-                    </div>
-                `;
-            });
-            cartTotal.innerHTML = `<strong>Total: L.E ${total}</strong>`;
-        }
-
-        function changeQuantity(index, delta) {
-            cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
-            }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            renderCart();
-        }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            renderCart();
-        }
-
-        function clearCart() {
-            cart = [];
-            localStorage.removeItem('cart');
-            updateCartCount();
-            renderCart();
-        }
-
-        function backToShop() {
-            document.querySelector('.cart-section').style.display = 'none';
-            document.querySelector('.product-section').style.display = 'block';
-        }
-
-        function goToMain() {
-            document.querySelector('.cart-section').style.display = 'none';
-            document.querySelector('.product-section').style.display = 'block';
-        }
-
-        function showModal() {
-            const modal = document.getElementById('modal');
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                closeModal();
-            }, 3000); // Auto-close after 3 seconds
-        }
-
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
-
-        updateCartCount();
-    </script>
 </body>
 </html>
+
