@@ -49,10 +49,10 @@
 <body>
     <section class="video-banner">
         <video autoplay loop muted playsinline preload="auto" id="bg-video">
-            <source src="https://res.cloudinary.com/ds9bldncb/video/upload/v1764274915/ssstik.io_1764272048537_gdetmv.mp4" type="video/mp4">
+            <source src="https://ik.imagekit.io/negm/ssstik.io_1764272048537.mp4" type="video/mp4">
         </video>
         <header>
-            <div class="brand"><a href="#product" onclick="goToMain()"><img src="https://res.cloudinary.com/ds9bldncb/image/upload/v1763589017/logo_for_the_website_pbsszm.png" alt="Negm Apparel"></a></div>
+            <div class="brand"><a href="#product" onclick="goToMain()"><img src="https://ik.imagekit.io/negm/logo%20for%20the%20website.png" alt="Negm Apparel"></a></div>
             <nav>
                 <a href="#product" onclick="goToMain()">Shop</a>
                 <a href="#cart" onclick="showCart()">Cart <span id="cart-count" class="cart-count">0</span></a>
@@ -63,7 +63,7 @@
     <section id="product" class="product-section">
         <div class="products-grid">
             <div class="product">
-                <img src="https://res.cloudinary.com/ds9bldncb/image/upload/v1763588866/srk_leather_jacket_ubwf48.png" alt="SRK Leather Jacket" class="product-image" loading="lazy">
+                <img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png" alt="SRK Leather Jacket" class="product-image" loading="lazy">
                 <div class="product-details">
                     <div class="product-name">SRK Leather Jacket</div>
                     <div class="product-price">L.E 1499</div>
@@ -112,8 +112,8 @@
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         function updateCartCount() { document.getElementById('cart-count').textContent = cart.length; }
         function getSelectedSize(productType) { const radios = document.querySelectorAll(`input[name="${productType}-size"]:checked`); return radios.length > 0 ? radios[0].value : null; }
-        function addToCart(productType) { const selectedSize = getSelectedSize(productType); if (!selectedSize) { alert('Please select a size.'); return; } let item; if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://res.cloudinary.com/ds9bldncb/image/upload/v1763588866/srk_leather_jacket_ubwf48.png', quantity: 1, size: selectedSize }; } cart.push(item); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); showModal(); }
-        function buyNow(productType) { const selectedSize = getSelectedSize(productType); if (!selectedSize) { alert('Please select a size.'); return; } let item; if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://res.cloudinary.com/ds9bldncb/image/upload/v1763588866/srk_leather_jacket_ubwf48.png', quantity: 1, size: selectedSize }; } cart = [item]; localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); window.location.href = 'checkout.html'; }
+        function addToCart(productType) { const selectedSize = getSelectedSize(productType); if (!selectedSize) { alert('Please select a size.'); return; } let item; if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } cart.push(item); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); showModal(); }
+        function buyNow(productType) { const selectedSize = getSelectedSize(productType); if (!selectedSize) { alert('Please select a size.'); return; } let item; if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } cart = [item]; localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); window.location.href = 'checkout.html'; }
         function scrollToProducts() { document.getElementById('product').scrollIntoView({ behavior: 'smooth' }); }
         function showCart() { document.querySelector('.product-section').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
         function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0; cart.forEach((item, index) => { total += item.price * item.quantity; cartItems.innerHTML += `<div class="cart-item"> <img src="${item.image}" alt="${item.name}"> <div class="cart-item-details"> <div>${item.name} (Size: ${item.size})</div> <div>L.E ${item.price}</div> <div class="quantity-controls"> <button onclick="changeQuantity(${index}, -1)">-</button> <span>${item.quantity}</span> <button onclick="changeQuantity(${index}, 1)">+</button> </div> <button onclick="removeItem(${index})">Remove</button> </div> </div>`; }); cartTotal.innerHTML = `<strong>Total: L.E ${total}</strong>`; }
