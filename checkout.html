@@ -25,7 +25,6 @@
         .buttons { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
         button { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 14px 24px; font-size: 14px; cursor: pointer; text-transform: uppercase; border-radius: 8px; flex: 1; min-width: 150px; min-height: 48px; transition: all 0.3s ease; }
         button:hover { background-color: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
-        .error { color: #ff0000; margin-top: 10px; }
         @media (max-width: 768px) { .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; width: 100px; } .buttons { flex-direction: column; gap: 15px; } input, textarea { font-size: 16px; } }
     </style>
     <!-- EmailJS Script -->
@@ -77,7 +76,6 @@
                 <button type="button" onclick="backToCart()">Back to Cart</button>
                 <button type="submit">Confirm Order</button>
             </div>
-            <div id="error-message" class="error" style="display:none;"></div>
         </form>
     </div>
     <script>
@@ -121,45 +119,17 @@
             })
             .then(response => {
                 if (response.ok) {
-                    // Formspree success - now send confirmation email
-                    const firstName = document.getElementById('first-name').value;
-                    const surname = document.getElementById('surname').value;
-                    const customerEmail = document.getElementById('email').value;
-                    const customerName = `${firstName} ${surname}`;
-                    const itemDetails = cart.map(item => `${item.name} (Qty: ${item.quantity})`).join(", ");
-                    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
-                    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-                    // Send email via EmailJS
-                    emailjs.send("service_gmail_vulgar", "template_wjjp954", {
-                        to_email: customerEmail,
-                        customerName: customerName,
-                        orderId: "AUTO-" + Date.now(),
-                        itemName: itemDetails,
-                        quantity: totalQuantity,
-                        totalPrice: totalPrice,
-                        deliveryDate: "Within 5-7 business days",
-                        trackingLink: "https://yourtrackinglink.com"  // Replace with real link
-                    }).then(function(response) {
-                        console.log('Email sent successfully:', response);
-                        // Clear cart and redirect
-                        localStorage.removeItem('cart');
-                        window.location.href = 'thanks.html';
-                    }).catch(function(error) {
-                        console.error('EmailJS Error:', error);
-                        alert('Order submitted, but email confirmation failed. Check your email later or contact support.');
-                        // Still clear cart and redirect since Formspree worked
-                        localStorage.removeItem('cart');
-                        window.location.href = 'thanks.html';
-                    });
+                    // Clear cart and redirect directly
+                    localStorage.removeItem('cart');
+                    window.location.href = 'thank.html';
                 } else {
                     throw new Error('Formspree submission failed');
                 }
             })
             .catch(error => {
-                document.getElementById('error-message').textContent = 'There was an error submitting your order. Please try again.';
-                document.getElementById('error-message').style.display = 'block';
                 console.error('Formspree Error:', error);
+                // Optionally, you can add an alert here if needed, but no red message
+                alert('There was an error submitting your order. Please try again.');
             });
         });
 
