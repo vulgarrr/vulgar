@@ -1,9 +1,11 @@
 <think>
-First, the user says: "i mean the full full code html"
+First, the user says: "there is still a text in my website on the top remove it and remove any link other for confirmation and i want form spree back https://formspree.io/f/mwpaeola so when recive order it get silently to form spree and redirect when confirmed to the thank u page"
 
 
-## Interpreting user request  
-- The user asked for "the full full code html," likely seeking complete HTML code.
+## Interpreting User Request  
+- The user wants to remove text at the top of their website and eliminate all links except for a confirmation link.  
+- They also request reintegrating Formspree with the form URL https://formspree.io/f/mwpaeola for order submissions.  
+- The form should send orders silently to Formspree and redirect to a thank-you page upon confirmation.
 </think>```html
 <!DOCTYPE html>
 <html lang="en">
@@ -315,13 +317,10 @@ First, the user says: "i mean the full full code html"
     <section class="video-banner">
         <video autoplay loop muted playsinline preload="auto">
             <source src="https://ik.imagekit.io/negm/ssstik.io_1764272048537.mp4" type="video/mp4">
-            <img src="https://ik.imagekit.io/negm/logo%20for%20the%20website.png" alt="Fallback image">
         </video>
         <header>
             <div class="brand">
-                <a href="#product" onclick="goToMain()">
-                    <img src="https://ik.imagekit.io/negm/logo%20for%20the%20website.png" alt="Negm Apparel">
-                </a>
+                <img src="https://ik.imagekit.io/negm/logo%20for%20the%20website.png" alt="Negm Apparel">
             </div>
             <nav>
                 <a href="#product" onclick="goToMain()">Shop</a>
@@ -368,7 +367,7 @@ First, the user says: "i mean the full full code html"
         <div id="cart-items"></div>
         <div id="cart-total"></div>
         <button onclick="clearCart()">Clear Cart</button>
-        <button onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
+        <button onclick="proceedToCheckout()">Proceed to Checkout</button>
         <button onclick="backToShop()">Back to Shop</button>
     </section>
     <div id="modal" class="modal">
@@ -427,7 +426,7 @@ First, the user says: "i mean the full full code html"
             cart = [item];
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount();
-            window.location.href = 'checkout.html';
+            proceedToCheckout();
         }
         function scrollToProducts() {
             document.getElementById('product').scrollIntoView({
@@ -500,6 +499,33 @@ First, the user says: "i mean the full full code html"
         }
         function closeModal() {
             document.getElementById('modal').style.display = 'none';
+        }
+        async function proceedToCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty.');
+                return;
+            }
+            const formData = new FormData();
+            formData.append('order', JSON.stringify(cart));
+            try {
+                const response = await fetch('https://formspree.io/f/mwpaeola', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                if (response.ok) {
+                    cart = [];
+                    localStorage.removeItem('cart');
+                    updateCartCount();
+                    window.location.href = 'thankyou.html';
+                } else {
+                    alert('Error submitting order. Please try again.');
+                }
+            } catch (error) {
+                alert('Error submitting order. Please try again.');
+            }
         }
         updateCartCount();
     </script>
