@@ -45,15 +45,15 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         footer { padding: 20px; background-color: #111; text-align: center; }
         .footer-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .footer-btn { background-color: #000; border: 1px solid #fff; color: #fff; padding: 8px 16px; font-size: 12px; cursor: pointer; text-transform: uppercase; border-radius: 4px; transition: all 0.3s ease; }
-        .footer-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .footer-btn { background-color: #000; border: 1px solid #fff; color: #fff; padding: 6px 12px; font-size: 11px; cursor: pointer; text-transform: uppercase; border-radius: 4px; transition: all 0.3s ease; }
+        .footer-btn:hover { background-color: rgba(255, 255, 255, 0.1); transform: translateY(-1px); }
         footer p { margin: 0; font-size: 12px; }
         @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .shop-now-btn { top: 70%; padding: 10px 20px; font-size: 14px; } .products-grid { flex-direction: column; align-items: center; gap: 20px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } .size-options { gap: 6px; } .size-option label { width: 55px; height: 55px; font-size: 18px; } .footer-buttons { flex-direction: column; align-items: center; } }
     </style>
 </head>
 <body>
     <section class="video-banner">
-        <video autoplay loop muted preload="metadata" id="bg-video">
+        <video autoplay loop muted playsinline preload="auto" id="bg-video">
             <source src="https://ik.imagekit.io/negm/ssstik.io_1764272048537.mp4" type="video/mp4">
         </video>
         <header>
@@ -116,14 +116,14 @@
     <footer>
         <div class="footer-buttons">
             <button class="footer-btn" onclick="showModal('Privacy Policy', 'We respect your privacy. We collect minimal data for orders and do not share it with third parties. For full details, contact us.')">Privacy Policy</button>
-            <button class="footer-btn" onclick="showModal('Refund & Exchange Policy', 'Refunds and exchanges are handled via our Instagram. Follow us @blackecomart for details. Items must be returned within 14 days in original condition.')">Refund & Exchange</button>
+            <button class="footer-btn" onclick="showModal('Refund & Exchange Policy', 'Refunds and exchanges are handled via our Instagram. Follow us @vulgar for details. Items must be returned within 14 days in original condition.')">Refund & Exchange</button>
             <button class="footer-btn" onclick="showModal('Contact Us', 'Email: <a href=\"mailto:vulgar.ww@gmail.com\">vulgar.ww@gmail.com</a>')">Contact Us</button>
             <button class="footer-btn" onclick="showModal('Address', 'Maadi, Egypt')">Address</button>
             <button class="footer-btn" onclick="showModal('Shipping/Service Duration Policy', 'Shipping takes 2-7 days depending on location. Free shipping on orders over $50. Tracking provided.')">Shipping Policy</button>
             <button class="footer-btn" onclick="showModal('Terms and Conditions', 'All sales are final unless otherwise stated. Use of this site implies acceptance of these terms. No warranties on products. Disputes resolved in Egypt.')">Terms & Conditions</button>
-            <button class="footer-btn" onclick="showModal('About Us', 'Black EcoMart is dedicated to sustainable, eco-friendly products. We aim to reduce waste with high-quality, reusable items.')">About Us</button>
+            <button class="footer-btn" onclick="showModal('About Us', 'VULGAR is dedicated to sustainable, eco-friendly products. We aim to reduce waste with high-quality, reusable items.')">About Us</button>
         </div>
-        <p>&copy; 2023 Black EcoMart. All rights reserved. Website created by Negm. Copyright 2013.</p>
+        <p>&copy; 2023 VULGAR. All rights reserved. Website created by Negm. Copyright 2013.</p>
     </footer>
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -137,4 +137,5 @@
         function changeQuantity(index, delta) { cart[index].quantity += delta; if (cart[index].quantity <= 0) { cart.splice(index, 1); } localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
         function removeItem(index) { cart.splice(index, 1); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
         function clearCart() { cart = []; localStorage.removeItem('cart'); updateCartCount(); renderCart(); }
-        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block';
+        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block'; }
+        function goToMain() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display =
