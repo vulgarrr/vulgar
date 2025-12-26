@@ -43,12 +43,19 @@
         .modal-content p { margin: 0 0 20px 0; font-size: 14px; }
         .close-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; color: #ffffff; cursor: pointer; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .shop-now-btn { top: 70%; padding: 10px 20px; font-size: 14px; } .products-grid { flex-direction: column; align-items: center; gap: 20px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } .size-options { gap: 6px; } .size-option label { width: 55px; height: 55px; font-size: 18px; } }
+        footer { padding: 40px 20px; background-color: #111; text-align: center; }
+        .footer-content { display: flex; flex-wrap: wrap; justify-content: space-around; margin-bottom: 20px; }
+        .footer-section { width: 30%; margin: 1rem; text-align: left; }
+        .footer-section h3 { color: #fff; margin-bottom: 0.5rem; font-size: 16px; }
+        .footer-section p, .footer-section a { color: #ccc; text-decoration: none; }
+        .footer-section a:hover { color: #fff; }
+        footer p { margin: 0; font-size: 12px; }
+        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .shop-now-btn { top: 70%; padding: 10px 20px; font-size: 14px; } .products-grid { flex-direction: column; align-items: center; gap: 20px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } .size-options { gap: 6px; } .size-option label { width: 55px; height: 55px; font-size: 18px; } .footer-content { flex-direction: column; align-items: center; } .footer-section { width: 90%; } }
     </style>
 </head>
 <body>
     <section class="video-banner">
-        <video autoplay loop muted playsinline preload="auto" id="bg-video">
+        <video autoplay loop muted preload="auto" id="bg-video">
             <source src="https://ik.imagekit.io/negm/ssstik.io_1764272048537.mp4" type="video/mp4">
         </video>
         <header>
@@ -108,6 +115,39 @@
             <p>Your item has been added to the cart.</p>
         </div>
     </div>
+    <footer>
+        <div class="footer-content">
+            <section class="footer-section">
+                <h3>Privacy Policy</h3>
+                <p>We respect your privacy. We collect minimal data for orders and do not share it with third parties. For full details, contact us.</p>
+            </section>
+            <section class="footer-section">
+                <h3>Refund & Exchange Policy</h3>
+                <p>Refunds and exchanges are handled via our Instagram. Follow us @blackecomart for details. Items must be returned within 14 days in original condition.</p>
+            </section>
+            <section class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: <a href="mailto:vulgar.ww@gmail.com">vulgar.ww@gmail.com</a></p>
+            </section>
+            <section class="footer-section">
+                <h3>Address</h3>
+                <p>Maadi, Egypt</p>
+            </section>
+            <section class="footer-section">
+                <h3>Shipping/Service Duration Policy</h3>
+                <p>Shipping takes 2-7 days depending on location. Free shipping on orders over $50. Tracking provided.</p>
+            </section>
+            <section class="footer-section">
+                <h3>Terms and Conditions</h3>
+                <p>All sales are final unless otherwise stated. Use of this site implies acceptance of these terms. No warranties on products. Disputes resolved in Egypt.</p>
+            </section>
+            <section class="footer-section">
+                <h3>About Us</h3>
+                <p>Black EcoMart is dedicated to sustainable, eco-friendly products. We aim to reduce waste with high-quality, reusable items.</p>
+            </section>
+        </div>
+        <p>&copy; 2023 Black EcoMart. All rights reserved. Website created by Negm. Copyright 2013.</p>
+    </footer>
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         function updateCartCount() { document.getElementById('cart-count').textContent = cart.length; }
@@ -121,12 +161,4 @@
         function removeItem(index) { cart.splice(index, 1); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
         function clearCart() { cart = []; localStorage.removeItem('cart'); updateCartCount(); renderCart(); }
         function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block'; }
-        function goToMain() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block'; }
-        function showModal() { const modal = document.getElementById('modal'); modal.style.display = 'flex'; setTimeout(() => { closeModal(); }, 3000); }
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
-        const video = document.getElementById('bg-video');
-        video.addEventListener('canplay', () => { video.play(); });
-        updateCartCount();
-    </script>
-</body>
-</html>
+        function goToMain() { document.querySelector
