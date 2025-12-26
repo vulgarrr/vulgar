@@ -38,24 +38,22 @@
         .cart-item-details { flex-grow: 1; }
         .quantity-controls { display: flex; align-items: center; gap: 10px; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center; animation: fadeIn 0.3s ease; }
-        .modal-content { background-color: #000000; color: #ffffff; border: 1px solid #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(255,255,255,0.3); text-align: center; max-width: 300px; width: 90%; position: relative; }
+        .modal-content { background-color: #000000; color: #ffffff; border: 1px solid #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(255,255,255,0.3); text-align: center; max-width: 500px; width: 90%; position: relative; max-height: 80vh; overflow-y: auto; }
         .modal-content h3 { margin: 0 0 10px 0; font-size: 18px; }
-        .modal-content p { margin: 0 0 20px 0; font-size: 14px; }
+        .modal-content p { margin: 0 0 20px 0; font-size: 14px; text-align: left; }
         .close-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; color: #ffffff; cursor: pointer; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        footer { padding: 40px 20px; background-color: #111; text-align: center; }
-        .footer-content { display: flex; flex-wrap: wrap; justify-content: space-around; margin-bottom: 20px; }
-        .footer-section { width: 30%; margin: 1rem; text-align: left; }
-        .footer-section h3 { color: #fff; margin-bottom: 0.5rem; font-size: 16px; }
-        .footer-section p, .footer-section a { color: #ccc; text-decoration: none; }
-        .footer-section a:hover { color: #fff; }
+        footer { padding: 20px; background-color: #111; text-align: center; }
+        .footer-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .footer-btn { background-color: #000; border: 1px solid #fff; color: #fff; padding: 8px 16px; font-size: 12px; cursor: pointer; text-transform: uppercase; border-radius: 4px; transition: all 0.3s ease; }
+        .footer-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
         footer p { margin: 0; font-size: 12px; }
-        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .shop-now-btn { top: 70%; padding: 10px 20px; font-size: 14px; } .products-grid { flex-direction: column; align-items: center; gap: 20px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } .size-options { gap: 6px; } .size-option label { width: 55px; height: 55px; font-size: 18px; } .footer-content { flex-direction: column; align-items: center; } .footer-section { width: 90%; } }
+        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .shop-now-btn { top: 70%; padding: 10px 20px; font-size: 14px; } .products-grid { flex-direction: column; align-items: center; gap: 20px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } .size-options { gap: 6px; } .size-option label { width: 55px; height: 55px; font-size: 18px; } .footer-buttons { flex-direction: column; align-items: center; } }
     </style>
 </head>
 <body>
     <section class="video-banner">
-        <video autoplay loop muted preload="auto" id="bg-video">
+        <video autoplay loop muted preload="metadata" id="bg-video">
             <source src="https://ik.imagekit.io/negm/ssstik.io_1764272048537.mp4" type="video/mp4">
         </video>
         <header>
@@ -111,40 +109,19 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">×</button>
-            <h3>Item Added!</h3>
-            <p>Your item has been added to the cart.</p>
+            <h3 id="modal-title"></h3>
+            <p id="modal-text"></p>
         </div>
     </div>
     <footer>
-        <div class="footer-content">
-            <section class="footer-section">
-                <h3>Privacy Policy</h3>
-                <p>We respect your privacy. We collect minimal data for orders and do not share it with third parties. For full details, contact us.</p>
-            </section>
-            <section class="footer-section">
-                <h3>Refund & Exchange Policy</h3>
-                <p>Refunds and exchanges are handled via our Instagram. Follow us @blackecomart for details. Items must be returned within 14 days in original condition.</p>
-            </section>
-            <section class="footer-section">
-                <h3>Contact Us</h3>
-                <p>Email: <a href="mailto:vulgar.ww@gmail.com">vulgar.ww@gmail.com</a></p>
-            </section>
-            <section class="footer-section">
-                <h3>Address</h3>
-                <p>Maadi, Egypt</p>
-            </section>
-            <section class="footer-section">
-                <h3>Shipping/Service Duration Policy</h3>
-                <p>Shipping takes 2-7 days depending on location. Free shipping on orders over $50. Tracking provided.</p>
-            </section>
-            <section class="footer-section">
-                <h3>Terms and Conditions</h3>
-                <p>All sales are final unless otherwise stated. Use of this site implies acceptance of these terms. No warranties on products. Disputes resolved in Egypt.</p>
-            </section>
-            <section class="footer-section">
-                <h3>About Us</h3>
-                <p>Black EcoMart is dedicated to sustainable, eco-friendly products. We aim to reduce waste with high-quality, reusable items.</p>
-            </section>
+        <div class="footer-buttons">
+            <button class="footer-btn" onclick="showModal('Privacy Policy', 'We respect your privacy. We collect minimal data for orders and do not share it with third parties. For full details, contact us.')">Privacy Policy</button>
+            <button class="footer-btn" onclick="showModal('Refund & Exchange Policy', 'Refunds and exchanges are handled via our Instagram. Follow us @blackecomart for details. Items must be returned within 14 days in original condition.')">Refund & Exchange</button>
+            <button class="footer-btn" onclick="showModal('Contact Us', 'Email: <a href=\"mailto:vulgar.ww@gmail.com\">vulgar.ww@gmail.com</a>')">Contact Us</button>
+            <button class="footer-btn" onclick="showModal('Address', 'Maadi, Egypt')">Address</button>
+            <button class="footer-btn" onclick="showModal('Shipping/Service Duration Policy', 'Shipping takes 2-7 days depending on location. Free shipping on orders over $50. Tracking provided.')">Shipping Policy</button>
+            <button class="footer-btn" onclick="showModal('Terms and Conditions', 'All sales are final unless otherwise stated. Use of this site implies acceptance of these terms. No warranties on products. Disputes resolved in Egypt.')">Terms & Conditions</button>
+            <button class="footer-btn" onclick="showModal('About Us', 'Black EcoMart is dedicated to sustainable, eco-friendly products. We aim to reduce waste with high-quality, reusable items.')">About Us</button>
         </div>
         <p>&copy; 2023 Black EcoMart. All rights reserved. Website created by Negm. Copyright 2013.</p>
     </footer>
@@ -152,7 +129,7 @@
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         function updateCartCount() { document.getElementById('cart-count').textContent = cart.length; }
         function getSelectedSize(productType) { const radios = document.querySelectorAll(`input[name="${productType}-size"]:checked`); return radios.length > 0 ? radios[0].value : null; }
-        function addToCart(productType) { const selectedSize = getSelectedSize(productType); if (!selectedSize) { alert('Please select a size.'); return; } let item; if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } cart.push(item); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); showModal(); }
+        function addToCart(productType) { const selectedSize = getSelectedSize(productType); if (!selectedSize) { alert('Please select a size.'); return; } let item; if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } cart.push(item); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); showModal('Item Added!', 'Your item has been added to the cart.'); }
         function buyNow(productType) { const selectedSize = getSelectedSize(productType); if (!selectedSize) { alert('Please select a size.'); return; } let item; if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } cart = [item]; localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); window.location.href = 'checkout.html'; }
         function scrollToProducts() { document.getElementById('product').scrollIntoView({ behavior: 'smooth' }); }
         function showCart() { document.querySelector('.product-section').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
@@ -160,5 +137,4 @@
         function changeQuantity(index, delta) { cart[index].quantity += delta; if (cart[index].quantity <= 0) { cart.splice(index, 1); } localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
         function removeItem(index) { cart.splice(index, 1); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
         function clearCart() { cart = []; localStorage.removeItem('cart'); updateCartCount(); renderCart(); }
-        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block'; }
-        function goToMain() { document.querySelector
+        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block';
