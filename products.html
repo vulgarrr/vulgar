@@ -16,16 +16,18 @@
         .products-grid { display: grid; gap: 40px; justify-items: center; }
         @media (min-width: 769px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
-        .product { max-width: 300px; text-align: center; cursor: pointer; }
-        .product-image { width: 100%; height: auto; margin-bottom: 10px; transition: transform 0.4s ease; }
-        .product.clicked .product-image { animation: pop 0.4s ease; }
+        .product { max-width: 300px; text-align: center; cursor: pointer; transition: transform 0.3s ease; }
+        .product:hover { transform: scale(1.05); }
+        .product-image { width: 100%; height: auto; margin-bottom: 10px; }
         .product-name { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
-        .product-details { opacity: 0; visibility: hidden; transform: scale(0.8) translateY(20px); transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease; margin-bottom: 20px; }
-        .product-details.show { opacity: 1; visibility: visible; transform: scale(1) translateY(0); animation: bounceIn 0.5s ease; }
-        .product-details.hide { animation: slideOut 0.5s ease; }
-        .product-price { font-size: 16px; margin-bottom: 15px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); z-index: 1000; justify-content: center; align-items: center; animation: fadeIn 0.3s ease; }
+        .modal.show { display: flex; }
+        .modal-content { background-color: #000000; border: 1px solid #ffffff; border-radius: 10px; padding: 20px; max-width: 400px; width: 90%; text-align: center; position: relative; animation: bounceIn 0.5s ease; }
+        .modal-content.hide { animation: slideOut 0.5s ease; }
+        .close { position: absolute; top: 10px; right: 10px; font-size: 20px; cursor: pointer; color: #ffffff; }
+        .modal-price { font-size: 16px; margin-bottom: 15px; }
         .size-options { margin-bottom: 15px; }
-        select { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 6px; font-size: 12px; border-radius: 20px; width: 100%; max-width: 180px; cursor: pointer; }
+        select { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 8px; font-size: 12px; border-radius: 20px; width: 100%; max-width: 180px; cursor: pointer; }
         .buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         button { background: linear-gradient(145deg, #000000, #222222); border: 1px solid #ffffff; color: #ffffff; padding: 10px 20px; font-size: 12px; cursor: pointer; text-transform: uppercase; border-radius: 25px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(255,255,255,0.1); }
         button:hover { background: linear-gradient(145deg, #ffffff, #cccccc); color: #000000; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(255,255,255,0.2); }
@@ -40,7 +42,7 @@
         footer a { color: #ccc; text-decoration: none; font-size: 10px; margin: 0 5px; transition: color 0.3s ease; }
         footer a:hover { color: #fff; }
         footer p { margin: 0 5px; font-size: 8px; color: #999; }
-        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes bounceIn { 0% { opacity: 0; transform: scale(0.3) translateY(50px); } 50% { opacity: 1; transform: scale(1.05) translateY(-10px); } 70% { transform: scale(0.9) translateY(5px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes slideOut { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(0.8) translateY(-20px); } }
         @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } footer { flex-direction: row; flex-wrap: wrap; } }
@@ -57,91 +59,48 @@
     <section class="product-section">
         <div class="products-grid">
             <!-- Product 1: LJ-1 (SRK Leather Jacket) -->
-            <div class="product" onclick="toggleDetails('jacket')">
+            <div class="product" onclick="openModal('jacket')">
                 <img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png" alt="LJ-1" class="product-image" loading="lazy">
                 <div class="product-name">LJ-1</div>
-                <div class="product-details" id="jacket-details">
-                    <div class="product-price">L.E 1499</div>
-                    <div class="size-options">
-                        <select id="jacket-size" onclick="event.stopPropagation();">
-                            <option value="">Select Size</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                        </select>
-                    </div>
-                    <div class="buttons">
-                        <button onclick="addToCart('jacket'); event.stopPropagation();">Add to Cart</button>
-                        <button onclick="buyNow('jacket'); event.stopPropagation();">Buy Now</button>
-                    </div>
-                </div>
             </div>
             <!-- Product 2: MP-1 (Black Basic Vulgar Sweatpants) -->
-            <div class="product" onclick="toggleDetails('sweatpants')">
+            <div class="product" onclick="openModal('sweatpants')">
                 <img src="https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png" alt="MP-1" class="product-image" loading="lazy">
                 <div class="product-name">MP-1</div>
-                <div class="product-details" id="sweatpants-details">
-                    <div class="product-price">L.E 799</div>
-                    <div class="size-options">
-                        <select id="sweatpants-size" onclick="event.stopPropagation();">
-                            <option value="">Select Size</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                        </select>
-                    </div>
-                    <div class="buttons">
-                        <button onclick="addToCart('sweatpants'); event.stopPropagation();">Add to Cart</button>
-                        <button onclick="buyNow('sweatpants'); event.stopPropagation();">Buy Now</button>
-                    </div>
-                </div>
             </div>
             <!-- Product 3: H-1 (Vul Hoodie) -->
-            <div class="product" onclick="toggleDetails('vulhoodie')">
+            <div class="product" onclick="openModal('vulhoodie')">
                 <img src="https://ik.imagekit.io/negm/vul%20hoodie%20black.png" alt="H-1" class="product-image" loading="lazy">
                 <div class="product-name">H-1</div>
-                <div class="product-details" id="vulhoodie-details">
-                    <div class="product-price">L.E 899</div>
-                    <div class="size-options">
-                        <select id="vulhoodie-size" onclick="event.stopPropagation();">
-                            <option value="">Select Size</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                        </select>
-                    </div>
-                    <div class="buttons">
-                        <button onclick="addToCart('vulhoodie'); event.stopPropagation();">Add to Cart</button>
-                        <button onclick="buyNow('vulhoodie'); event.stopPropagation();">Buy Now</button>
-                    </div>
-                </div>
             </div>
             <!-- Product 4: DP-1 (Vulgar Custom Denim) -->
-            <div class="product" onclick="toggleDetails('denim')">
+            <div class="product" onclick="openModal('denim')">
                 <img src="https://ik.imagekit.io/negm/vulgar%20denim%20pants.png" alt="DP-1" class="product-image" loading="lazy">
                 <div class="product-name">DP-1</div>
-                <div class="product-details" id="denim-details">
-                    <div class="product-price">L.E 799</div>
-                    <div class="size-options">
-                        <select id="denim-size" onclick="event.stopPropagation();">
-                            <option value="">Select Size</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                        </select>
-                    </div>
-                    <div class="buttons">
-                        <button onclick="addToCart('denim'); event.stopPropagation();">Add to Cart</button>
-                        <button onclick="buyNow('denim'); event.stopPropagation();">Buy Now</button>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
+    <!-- Modal Popup -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-name"></div>
+            <div id="modal-price"></div>
+            <div class="size-options">
+                <select id="modal-size">
+                    <option value="">Select Size</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                </select>
+            </div>
+            <div class="buttons">
+                <button onclick="addToCartModal()">Add to Cart</button>
+                <button onclick="buyNowModal()">Buy Now</button>
+            </div>
+        </div>
+    </div>
     <section id="cart" class="cart-section">
         <h2>Your Cart</h2>
         <div id="cart-items"></div>
@@ -163,43 +122,58 @@
     </footer>
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let currentProduct = '';
         function updateCartCount() { document.getElementById('cart-count').textContent = cart.length; }
-        function getSelectedSize(productType) { const select = document.getElementById(`${productType}-size`); return select.value; }
         function showNotification(message) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
             notification.classList.add('show');
             setTimeout(() => { notification.classList.remove('show'); }, 3000);
         }
-        function toggleDetails(productType) {
-            const product = document.querySelector(`[onclick="toggleDetails('${productType}')"]`);
-            const details = document.getElementById(`${productType}-details`);
-            if (details.classList.contains('show')) {
-                details.classList.add('hide');
-                setTimeout(() => { details.classList.remove('show', 'hide'); }, 500);  // Cool disappear animation
-            } else {
-                details.classList.add('show');
-                product.classList.add('clicked');
-                setTimeout(() => { product.classList.remove('clicked'); }, 400);  // Pop animation
-            }
+        function openModal(productType) {
+            currentProduct = productType;
+            const modal = document.getElementById('product-modal');
+            const nameEl = document.getElementById('modal-name');
+            const priceEl = document.getElementById('modal-price');
+            if (productType === 'jacket') { nameEl.textContent = 'LJ-1'; priceEl.textContent = 'L.E 1499'; }
+            else if (productType === 'sweatpants') { nameEl.textContent = 'MP-1'; priceEl.textContent = 'L.E 799'; }
+            else if (productType === 'vulhoodie') { nameEl.textContent = 'H-1'; priceEl.textContent = 'L.E 899'; }
+            else if (productType === 'denim') { nameEl.textContent = 'DP-1'; priceEl.textContent = 'L.E 799'; }
+            modal.classList.add('show');
         }
-        function addToCart(productType) { 
-            const selectedSize = getSelectedSize(productType); 
-            if (!selectedSize) { showNotification('Please select a size.'); return; } 
-            let item; 
-            if (productType === 'jacket') { item = { name: 'LJ-1', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'sweatpants') { item = { name: 'MP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'vulhoodie') { item = { name: 'H-1', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'denim') { item = { name: 'DP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
-            cart.push(item); 
-            localStorage.setItem('cart', JSON.stringify(cart)); 
-            updateCartCount(); 
-            showNotification('Item added to your cart!'); 
+        function closeModal() {
+            const modal = document.getElementById('product-modal');
+            const content = modal.querySelector('.modal-content');
+            content.classList.add('hide');
+            setTimeout(() => { modal.classList.remove('show'); content.classList.remove('hide'); }, 500);
         }
-        function buyNow(productType) { 
-            const selectedSize = getSelectedSize(productType); 
-            if (!selectedSize) { showNotification('Please select a size.'); return; } 
-            let item; 
-            if (productType === 'jacket') { item = { name: 'LJ-1', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'sweatpants') { item = { name: 'MP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
-            else if (product
+        function addToCartModal() {
+            const size = document.getElementById('modal-size').value;
+            if (!size) { showNotification('Please select a size.'); return; }
+            let item;
+            if (currentProduct === 'jacket') { item = { name: 'LJ-1', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size }; }
+            else if (currentProduct === 'sweatpants') { item = { name: 'MP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size }; }
+            else if (currentProduct === 'vulhoodie') { item = { name: 'H-1', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size }; }
+            else if (currentProduct === 'denim') { item = { name: 'DP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size }; }
+            cart.push(item);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showNotification('Item added to your cart!');
+            closeModal();
+        }
+        function buyNowModal() {
+            const size = document.getElementById('modal-size').value;
+            if (!size) { showNotification('Please select a size.'); return; }
+            let item;
+            if (currentProduct === 'jacket') { item = { name: 'LJ-1', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size }; }
+            else if (currentProduct === 'sweatpants') { item = { name: 'MP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size }; }
+            else if (currentProduct === 'vulhoodie') { item = { name: 'H-1', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size }; }
+            else if (currentProduct === 'denim') { item = { name: 'DP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size }; }
+            cart = [item];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            window.location.href = 'checkout.html';
+        }
+        function showCart() { document.querySelector('.product-section').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
+        function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0; cart.forEach((item, index) => { total += item.price * item.quantity; cartItems.innerHTML += `<div class="cart-item"> <img src="${item.image}" alt="${item.name}"> <div class="cart-item-details"> <div>${item.name} (Size: ${item.size})</div> <div>L.E ${item.price}</div> <div class="quantity-controls"> <button onclick="changeQuantity(${index}, -1)">-</button> <span>${item.quantity}</span> <button onclick="changeQuantity(${index}, 1)">+</button> </div> <button onclick="removeItem(${index})">Remove</button> </div> </div>`; }); cartTotal.innerHTML = `<strong>Total: L.E ${total}</strong>`; }
+        function changeQuantity(index, delta) { cart[index].quantity += delta; if (cart[index].quantity <= 0) { cart.splice(index
