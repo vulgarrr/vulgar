@@ -54,11 +54,11 @@
         <header>
             <div class="brand"><a href="#product" onclick="goToMain()"><img src="https://ik.imagekit.io/negm/logo%20for%20the%20website.png" alt="Negm Apparel"></a></div>
             <nav>
-                <a href="#product" onclick="goToMain()">Shop</a>
+                <a href="products.html">Shop</a>  <!-- Updated to link to products.html -->
                 <a href="#cart" onclick="showCart()">Cart <span id="cart-count" class="cart-count">0</span></a>
             </nav>
         </header>
-        <button class="shop-now-btn" onclick="scrollToProducts()">Shop Now</button>
+        <button class="shop-now-btn" onclick="window.location.href='products.html'">Shop Now</button>  <!-- Changed to redirect to products.html -->
     </section>
     <section id="product" class="product-section">
         <div class="products-grid">
