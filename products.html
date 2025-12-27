@@ -16,11 +16,12 @@
         .products-grid { display: grid; gap: 40px; justify-items: center; }
         @media (min-width: 769px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
-        .product { max-width: 300px; text-align: center; cursor: pointer; }
-        .product-image { width: 100%; height: auto; margin-bottom: 10px; }
+        .product { max-width: 300px; text-align: center; cursor: pointer; transition: transform 0.3s ease; }
+        .product.clicked { transform: scale(1.05); }  /* Cool pop effect on click */
+        .product-image { width: 100%; height: auto; margin-bottom: 10px; transition: transform 0.3s ease; }
         .product-name { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
-        .product-details { opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; margin-bottom: 20px; }
-        .product-details.show { opacity: 1; visibility: visible; }
+        .product-details { opacity: 0; visibility: hidden; max-height: 0; overflow: hidden; transition: opacity 0.5s ease, visibility 0.5s ease, max-height 0.5s ease; margin-bottom: 20px; }
+        .product-details.show { opacity: 1; visibility: visible; max-height: 500px; }  /* Smooth slide-down animation */
         .product-price { font-size: 16px; margin-bottom: 15px; }
         .size-options { margin-bottom: 15px; }
         select { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 6px; font-size: 12px; border-radius: 20px; width: 100%; max-width: 180px; cursor: pointer; }
@@ -167,8 +168,11 @@
             setTimeout(() => { notification.classList.remove('show'); }, 3000);
         }
         function toggleDetails(productType) {
+            const product = document.querySelector(`[onclick="toggleDetails('${productType}')"]`);
             const details = document.getElementById(`${productType}-details`);
             details.classList.toggle('show');
+            product.classList.toggle('clicked');  // Add cool pop effect
+            setTimeout(() => { product.classList.remove('clicked'); }, 300);  // Remove after animation
         }
         function addToCart(productType) { 
             const selectedSize = getSelectedSize(productType); 
@@ -197,8 +201,4 @@
             window.location.href = 'checkout.html'; 
         }
         function showCart() { document.querySelector('.product-section').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
-        function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0; cart.forEach((item, index) => { total += item.price * item.quantity; cartItems.innerHTML += `<div class="cart-item"> <img src="${item.image}" alt="${item.name}"> <div class="cart-item-details"> <div>${item.name} (Size: ${item.size})</div> <div>L.E ${item.price}</div> <div class="quantity-controls"> <button onclick="changeQuantity(${index}, -1)">-</button> <span>${item.quantity}</span> <button onclick="changeQuantity(${index}, 1)">+</button> </div> <button onclick="removeItem(${index})">Remove</button> </div> </div>`; }); cartTotal.innerHTML = `<strong>Total: L.E ${total}</strong>`; }
-        function changeQuantity(index, delta) { cart[index].quantity += delta; if (cart[index].quantity <= 0) { cart.splice(index, 1); } localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
-        function removeItem(index) { cart.splice(index, 1); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
-        function clearCart() { cart = []; localStorage.removeItem('cart'); updateCartCount(); renderCart(); }
-        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product
+        function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0; cart.forEach((item, index) => { total += item.price * item.quantity; cartItems.innerHTML += `<div class="cart-item"> <img src="${item.image}" alt="${item.name}"> <div class="cart-item-details"> <div>${item.name} (Size: ${item.size})</div> <div>L.E ${item.price}</div> <div class="quantity-controls
