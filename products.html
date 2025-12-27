@@ -23,10 +23,10 @@
         .product-details.show { opacity: 1; visibility: visible; }
         .product-price { font-size: 16px; margin-bottom: 15px; }
         .size-options { margin-bottom: 15px; }
-        select { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 6px; font-size: 12px; border-radius: 4px; width: 100%; max-width: 180px; }
-        .buttons { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-        button { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 8px 16px; font-size: 12px; cursor: pointer; text-transform: uppercase; border-radius: 4px; transition: all 0.2s ease; }
-        button:hover { background-color: #ffffff; color: #000000; transform: translateY(-1px); }
+        select { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 6px; font-size: 12px; border-radius: 20px; width: 100%; max-width: 180px; cursor: pointer; }
+        .buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        button { background: linear-gradient(145deg, #000000, #222222); border: 1px solid #ffffff; color: #ffffff; padding: 10px 20px; font-size: 12px; cursor: pointer; text-transform: uppercase; border-radius: 25px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(255,255,255,0.1); }
+        button:hover { background: linear-gradient(145deg, #ffffff, #cccccc); color: #000000; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(255,255,255,0.2); }
         .cart-section { display: none; padding: 40px 20px; max-width: 800px; margin: 0 auto; background-color: #000000; color: #ffffff; }
         .cart-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333333; padding-bottom: 20px; }
         .cart-item img { width: 100px; height: auto; margin-right: 20px; }
@@ -34,11 +34,11 @@
         .quantity-controls { display: flex; align-items: center; gap: 10px; }
         .notification { position: fixed; top: 20px; right: 20px; background-color: #ffffff; color: #000000; padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); font-weight: bold; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; }
         .notification.show { opacity: 1; }
-        footer { padding: 10px; background-color: transparent; text-align: center; position: relative; }
-        footer a { color: #ccc; text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.3s ease; }
+        footer { padding: 5px; background-color: transparent; text-align: center; position: relative; display: flex; flex-wrap: wrap; justify-content: center; }
+        footer a { color: #ccc; text-decoration: none; font-size: 10px; margin: 0 5px; transition: color 0.3s ease; }
         footer a:hover { color: #fff; }
-        footer p { margin: 5px 0 0 0; font-size: 10px; color: #999; }
-        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } footer { flex-direction: column; } footer a { display: block; margin: 5px 0; } }
+        footer p { margin: 0 5px; font-size: 8px; color: #999; }
+        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } footer { flex-direction: row; flex-wrap: wrap; } }
     </style>
 </head>
 <body>
@@ -58,7 +58,7 @@
                 <div class="product-details" id="jacket-details">
                     <div class="product-price">L.E 1499</div>
                     <div class="size-options">
-                        <select id="jacket-size">
+                        <select id="jacket-size" onclick="event.stopPropagation();">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -79,7 +79,7 @@
                 <div class="product-details" id="sweatpants-details">
                     <div class="product-price">L.E 799</div>
                     <div class="size-options">
-                        <select id="sweatpants-size">
+                        <select id="sweatpants-size" onclick="event.stopPropagation();">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -100,7 +100,7 @@
                 <div class="product-details" id="vulhoodie-details">
                     <div class="product-price">L.E 899</div>
                     <div class="size-options">
-                        <select id="vulhoodie-size">
+                        <select id="vulhoodie-size" onclick="event.stopPropagation();">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -121,7 +121,7 @@
                 <div class="product-details" id="denim-details">
                     <div class="product-price">L.E 799</div>
                     <div class="size-options">
-                        <select id="denim-size">
+                        <select id="denim-size" onclick="event.stopPropagation();">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -201,8 +201,4 @@
         function changeQuantity(index, delta) { cart[index].quantity += delta; if (cart[index].quantity <= 0) { cart.splice(index, 1); } localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
         function removeItem(index) { cart.splice(index, 1); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
         function clearCart() { cart = []; localStorage.removeItem('cart'); updateCartCount(); renderCart(); }
-        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block'; }
-        updateCartCount();
-    </script>
-</body>
-</html>
+        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product
