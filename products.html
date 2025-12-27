@@ -16,14 +16,11 @@
         .products-grid { display: grid; gap: 40px; justify-items: center; }
         @media (min-width: 769px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
-        .product { max-width: 300px; text-align: center; cursor: pointer; position: relative; }
-        .product-image { width: 100%; height: auto; margin-bottom: 10px; transition: transform 0.4s ease; }
-        .product.clicked .product-image { animation: pop 0.4s ease; }
+        .product { max-width: 300px; text-align: center; cursor: pointer; }
+        .product-image { width: 100%; height: auto; margin-bottom: 10px; }
         .product-name { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
-        .product-details { opacity: 0; visibility: hidden; transform: scale(0.8) translateY(20px); transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease; margin-bottom: 20px; background-color: rgba(0,0,0,0.8); padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(255,255,255,0.1); position: absolute; top: 100%; left: 50%; transform: translateX(-50%) scale(0.8) translateY(20px); z-index: 5; }
-        .product-details.show { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1) translateY(0); animation: bounceIn 0.5s ease; }
-        .product-details.hide { animation: slideOut 0.5s ease; }
-        .close-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ffffff; font-size: 18px; cursor: pointer; }
+        .product-details { opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; margin-bottom: 20px; }
+        .product-details.show { opacity: 1; visibility: visible; }
         .product-price { font-size: 16px; margin-bottom: 15px; }
         .size-options { margin-bottom: 15px; }
         select { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 6px; font-size: 12px; border-radius: 4px; width: 100%; max-width: 180px; }
@@ -37,27 +34,11 @@
         .quantity-controls { display: flex; align-items: center; gap: 10px; }
         .notification { position: fixed; top: 20px; right: 20px; background-color: #ffffff; color: #000000; padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); font-weight: bold; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; }
         .notification.show { opacity: 1; }
-        footer { padding: 5px; background-color: transparent; text-align: center; position: relative; display: flex; justify-content: center; flex-wrap: wrap; }
-        footer a { color: #ccc; text-decoration: none; font-size: 8px; margin: 0 5px; transition: color 0.3s ease; }
+        footer { padding: 10px; background-color: transparent; text-align: center; position: relative; }
+        footer a { color: #ccc; text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.3s ease; }
         footer a:hover { color: #fff; }
-        footer a .full { display: inline; }
-        footer a .short { display: none; }
-        footer p { margin: 0 5px; font-size: 6px; color: #999; }
-        @media (max-width: 768px) { 
-            header { padding: 15px; } 
-            nav { gap: 10px; } 
-            .product { max-width: 100%; } 
-            .buttons { flex-direction: column; align-items: center; } 
-            .cart-item { flex-direction: column; text-align: center; } 
-            .cart-item img { margin-right: 0; margin-bottom: 10px; } 
-            footer { flex-direction: row; } 
-            footer a .full { display: none; }
-            footer a .short { display: inline; }
-            button { padding: 12px 24px; font-size: 14px; } /* Larger buttons for mobile touch */
-        }
-        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        @keyframes bounceIn { 0% { opacity: 0; transform: translateX(-50%) scale(0.3) translateY(50px); } 50% { opacity: 1; transform: translateX(-50%) scale(1.05) translateY(-10px); } 70% { transform: translateX(-50%) scale(0.9) translateY(5px); } 100% { opacity: 1; transform: translateX(-50%) scale(1) translateY(0); } }
-        @keyframes slideOut { 0% { opacity: 1; transform: translateX(-50%) scale(1) translateY(0); } 100% { opacity: 0; transform: translateX(-50%) scale(0.8) translateY(-20px); } }
+        footer p { margin: 5px 0 0 0; font-size: 10px; color: #999; }
+        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } footer { flex-direction: column; } footer a { display: block; margin: 5px 0; } }
     </style>
 </head>
 <body>
@@ -75,10 +56,9 @@
                 <img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png" alt="LJ-1" class="product-image" loading="lazy">
                 <div class="product-name">LJ-1</div>
                 <div class="product-details" id="jacket-details">
-                    <button class="close-btn" onclick="closeDetails('jacket'); event.stopPropagation();">&times;</button>
                     <div class="product-price">L.E 1499</div>
                     <div class="size-options">
-                        <select id="jacket-size" onclick="event.stopPropagation();">
+                        <select id="jacket-size">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -97,10 +77,9 @@
                 <img src="https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png" alt="MP-1" class="product-image" loading="lazy">
                 <div class="product-name">MP-1</div>
                 <div class="product-details" id="sweatpants-details">
-                    <button class="close-btn" onclick="closeDetails('sweatpants'); event.stopPropagation();">&times;</button>
                     <div class="product-price">L.E 799</div>
                     <div class="size-options">
-                        <select id="sweatpants-size" onclick="event.stopPropagation();">
+                        <select id="sweatpants-size">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -119,10 +98,9 @@
                 <img src="https://ik.imagekit.io/negm/vul%20hoodie%20black.png" alt="H-1" class="product-image" loading="lazy">
                 <div class="product-name">H-1</div>
                 <div class="product-details" id="vulhoodie-details">
-                    <button class="close-btn" onclick="closeDetails('vulhoodie'); event.stopPropagation();">&times;</button>
                     <div class="product-price">L.E 899</div>
                     <div class="size-options">
-                        <select id="vulhoodie-size" onclick="event.stopPropagation();">
+                        <select id="vulhoodie-size">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -141,10 +119,9 @@
                 <img src="https://ik.imagekit.io/negm/vulgar%20denim%20pants.png" alt="DP-1" class="product-image" loading="lazy">
                 <div class="product-name">DP-1</div>
                 <div class="product-details" id="denim-details">
-                    <button class="close-btn" onclick="closeDetails('denim'); event.stopPropagation();">&times;</button>
                     <div class="product-price">L.E 799</div>
                     <div class="size-options">
-                        <select id="denim-size" onclick="event.stopPropagation();">
+                        <select id="denim-size">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -170,13 +147,13 @@
     </section>
     <div id="notification" class="notification"></div>
     <footer>
-        <a href="privacy.html"><span class="full">Privacy Policy</span><span class="short">Privacy</span></a>
-        <a href="refund.html"><span class="full">Refund & Exchange Policy</span><span class="short">Refund</span></a>
-        <a href="contact.html"><span class="full">Contact Us</span><span class="short">Contact</span></a>
-        <a href="address.html"><span class="full">Address</span><span class="short">Address</span></a>
-        <a href="shipping.html"><span class="full">Shipping Policy</span><span class="short">Shipping</span></a>
-        <a href="terms.html"><span class="full">Terms & Conditions</span><span class="short">Terms</span></a>
-        <a href="about.html"><span class="full">About Us</span><span class="short">About</span></a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="refund.html">Refund & Exchange Policy</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="address.html">Address</a>
+        <a href="shipping.html">Shipping Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="about.html">About Us</a>
         <p>&copy; 2023 VULGAR. All rights reserved. Website created by Negm. Copyright 2013.</p>
     </footer>
     <script>
@@ -190,27 +167,8 @@
             setTimeout(() => { notification.classList.remove('show'); }, 3000);
         }
         function toggleDetails(productType) {
-            // Hide all product details first
-            const allDetails = document.querySelectorAll('.product-details');
-            allDetails.forEach(detail => {
-                if (detail.classList.contains('show')) {
-                    detail.classList.add('hide');
-                    setTimeout(() => { detail.classList.remove('show', 'hide'); }, 500);
-                }
-            });
-            // Then show the clicked product's details
-            const product = document.querySelector(`[onclick="toggleDetails('${productType}')"]`);
             const details = document.getElementById(`${productType}-details`);
-            if (!details.classList.contains('show')) {
-                details.classList.add('show');
-                product.classList.add('clicked');
-                setTimeout(() => { product.classList.remove('clicked'); }, 400);
-            }
-        }
-        function closeDetails(productType) {
-            const details = document.getElementById(`${productType}-details`);
-            details.classList.add('hide');
-            setTimeout(() => { details.classList.remove('show', 'hide'); }, 500);
+            details.classList.toggle('show');
         }
         function addToCart(productType) { 
             const selectedSize = getSelectedSize(productType); 
@@ -219,4 +177,32 @@
             if (productType === 'jacket') { item = { name: 'LJ-1', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'sweatpants') { item = { name: 'MP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'vulhoodie') { item = { name: 'H-1', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'denim') { item = { name: 'DP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize
+            else if (productType === 'denim') { item = { name: 'DP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
+            cart.push(item); 
+            localStorage.setItem('cart', JSON.stringify(cart)); 
+            updateCartCount(); 
+            showNotification('Item added to your cart!'); 
+        }
+        function buyNow(productType) { 
+            const selectedSize = getSelectedSize(productType); 
+            if (!selectedSize) { showNotification('Please select a size.'); return; } 
+            let item; 
+            if (productType === 'jacket') { item = { name: 'LJ-1', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'sweatpants') { item = { name: 'MP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'vulhoodie') { item = { name: 'H-1', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'denim') { item = { name: 'DP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
+            cart = [item]; 
+            localStorage.setItem('cart', JSON.stringify(cart)); 
+            updateCartCount(); 
+            window.location.href = 'checkout.html'; 
+        }
+        function showCart() { document.querySelector('.product-section').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
+        function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0; cart.forEach((item, index) => { total += item.price * item.quantity; cartItems.innerHTML += `<div class="cart-item"> <img src="${item.image}" alt="${item.name}"> <div class="cart-item-details"> <div>${item.name} (Size: ${item.size})</div> <div>L.E ${item.price}</div> <div class="quantity-controls"> <button onclick="changeQuantity(${index}, -1)">-</button> <span>${item.quantity}</span> <button onclick="changeQuantity(${index}, 1)">+</button> </div> <button onclick="removeItem(${index})">Remove</button> </div> </div>`; }); cartTotal.innerHTML = `<strong>Total: L.E ${total}</strong>`; }
+        function changeQuantity(index, delta) { cart[index].quantity += delta; if (cart[index].quantity <= 0) { cart.splice(index, 1); } localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
+        function removeItem(index) { cart.splice(index, 1); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
+        function clearCart() { cart = []; localStorage.removeItem('cart'); updateCartCount(); renderCart(); }
+        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block'; }
+        updateCartCount();
+    </script>
+</body>
+</html>
