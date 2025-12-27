@@ -22,10 +22,10 @@
         .product-name { font-size: 20px; font-weight: bold; margin-bottom: 10px; }
         .product-price { font-size: 18px; margin-bottom: 20px; }
         .size-options { margin-bottom: 20px; }
-        select { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 8px; font-size: 14px; border-radius: 4px; width: 100%; max-width: 200px; }
-        .buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        button { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 10px 20px; font-size: 14px; cursor: pointer; text-transform: uppercase; border-radius: 8px; box-shadow: 0 2px 4px rgba(255,255,255,0.1); transition: all 0.3s ease; }
-        button:hover { background-color: rgba(255, 255, 255, 0.1); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(255,255,255,0.2); }
+        select { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 6px; font-size: 12px; border-radius: 4px; width: 100%; max-width: 180px; }
+        .buttons { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        button { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 8px 16px; font-size: 12px; cursor: pointer; text-transform: uppercase; border-radius: 4px; transition: all 0.2s ease; }
+        button:hover { background-color: #ffffff; color: #000000; transform: translateY(-1px); }
         .cart-section { display: none; padding: 40px 20px; max-width: 800px; margin: 0 auto; background-color: #000000; color: #ffffff; }
         .cart-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333333; padding-bottom: 20px; }
         .cart-item img { width: 100px; height: auto; margin-right: 20px; }
@@ -50,7 +50,28 @@
     </header>
     <section class="product-section">
         <div class="products-grid">
-            <!-- Product 1: Black Basic Vulgar Sweatpants -->
+            <!-- Product 1: SRK Leather Jacket -->
+            <div class="product">
+                <img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png" alt="SRK Leather Jacket" class="product-image" loading="lazy">
+                <div class="product-details">
+                    <div class="product-name">SRK Leather Jacket</div>
+                    <div class="product-price">L.E 1499</div>
+                    <div class="size-options">
+                        <select id="jacket-size">
+                            <option value="">Select Size</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>
+                    <div class="buttons">
+                        <button onclick="addToCart('jacket')">Add to Cart</button>
+                        <button onclick="buyNow('jacket')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 2: Black Basic Vulgar Sweatpants -->
             <div class="product">
                 <img src="https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png" alt="Black Basic Vulgar Sweatpants" class="product-image" loading="lazy">
                 <div class="product-details">
@@ -71,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Product 2: Vul Hoodie -->
+            <!-- Product 3: Vul Hoodie -->
             <div class="product">
                 <img src="https://ik.imagekit.io/negm/vul%20hoodie%20black.png" alt="Vul Hoodie" class="product-image" loading="lazy">
                 <div class="product-details">
@@ -92,7 +113,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Product 3: Vulgar Custom Denim -->
+            <!-- Product 4: Vulgar Custom Denim -->
             <div class="product">
                 <img src="https://ik.imagekit.io/negm/vulgar%20denim%20pants.png" alt="Vulgar Custom Denim" class="product-image" loading="lazy">
                 <div class="product-details">
@@ -148,7 +169,8 @@
             const selectedSize = getSelectedSize(productType); 
             if (!selectedSize) { showNotification('Please select a size.'); return; } 
             let item; 
-            if (productType === 'sweatpants') { item = { name: 'Black Basic Vulgar Sweatpants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
+            if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'sweatpants') { item = { name: 'Black Basic Vulgar Sweatpants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'vulhoodie') { item = { name: 'Vul Hoodie', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'denim') { item = { name: 'Vulgar Custom Denim', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
             cart.push(item); 
@@ -160,7 +182,8 @@
             const selectedSize = getSelectedSize(productType); 
             if (!selectedSize) { showNotification('Please select a size.'); return; } 
             let item; 
-            if (productType === 'sweatpants') { item = { name: 'Black Basic Vulgar Sweatpants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
+            if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'sweatpants') { item = { name: 'Black Basic Vulgar Sweatpants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'vulhoodie') { item = { name: 'Vul Hoodie', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'denim') { item = { name: 'Vulgar Custom Denim', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
             cart = [item]; 
