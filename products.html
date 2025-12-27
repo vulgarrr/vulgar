@@ -16,9 +16,10 @@
         .products-grid { display: grid; gap: 40px; justify-items: center; }
         @media (min-width: 769px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
-        .product { max-width: 300px; text-align: center; }
+        .product { max-width: 300px; text-align: center; cursor: pointer; }
         .product-image { width: 100%; height: auto; margin-bottom: 20px; }
-        .product-details { margin-bottom: 20px; }
+        .product-details { display: none; margin-bottom: 20px; }
+        .product-details.show { display: block; }
         .product-name { font-size: 20px; font-weight: bold; margin-bottom: 10px; }
         .product-price { font-size: 18px; margin-bottom: 20px; }
         .size-options { margin-bottom: 20px; }
@@ -50,11 +51,11 @@
     </header>
     <section class="product-section">
         <div class="products-grid">
-            <!-- Product 1: SRK Leather Jacket -->
-            <div class="product">
-                <img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png" alt="SRK Leather Jacket" class="product-image" loading="lazy">
-                <div class="product-details">
-                    <div class="product-name">SRK Leather Jacket</div>
+            <!-- Product 1: LJ-1 (SRK Leather Jacket) -->
+            <div class="product" onclick="toggleDetails('jacket')">
+                <img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png" alt="LJ-1" class="product-image" loading="lazy">
+                <div class="product-details" id="jacket-details">
+                    <div class="product-name">LJ-1</div>
                     <div class="product-price">L.E 1499</div>
                     <div class="size-options">
                         <select id="jacket-size">
@@ -66,16 +67,16 @@
                         </select>
                     </div>
                     <div class="buttons">
-                        <button onclick="addToCart('jacket')">Add to Cart</button>
-                        <button onclick="buyNow('jacket')">Buy Now</button>
+                        <button onclick="addToCart('jacket'); event.stopPropagation();">Add to Cart</button>
+                        <button onclick="buyNow('jacket'); event.stopPropagation();">Buy Now</button>
                     </div>
                 </div>
             </div>
-            <!-- Product 2: Black Basic Vulgar Sweatpants -->
-            <div class="product">
-                <img src="https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png" alt="Black Basic Vulgar Sweatpants" class="product-image" loading="lazy">
-                <div class="product-details">
-                    <div class="product-name">Black Basic Vulgar Sweatpants</div>
+            <!-- Product 2: MP-1 (Black Basic Vulgar Sweatpants) -->
+            <div class="product" onclick="toggleDetails('sweatpants')">
+                <img src="https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png" alt="MP-1" class="product-image" loading="lazy">
+                <div class="product-details" id="sweatpants-details">
+                    <div class="product-name">MP-1</div>
                     <div class="product-price">L.E 799</div>
                     <div class="size-options">
                         <select id="sweatpants-size">
@@ -87,16 +88,16 @@
                         </select>
                     </div>
                     <div class="buttons">
-                        <button onclick="addToCart('sweatpants')">Add to Cart</button>
-                        <button onclick="buyNow('sweatpants')">Buy Now</button>
+                        <button onclick="addToCart('sweatpants'); event.stopPropagation();">Add to Cart</button>
+                        <button onclick="buyNow('sweatpants'); event.stopPropagation();">Buy Now</button>
                     </div>
                 </div>
             </div>
-            <!-- Product 3: Vul Hoodie -->
-            <div class="product">
-                <img src="https://ik.imagekit.io/negm/vul%20hoodie%20black.png" alt="Vul Hoodie" class="product-image" loading="lazy">
-                <div class="product-details">
-                    <div class="product-name">Vul Hoodie</div>
+            <!-- Product 3: H-1 (Vul Hoodie) -->
+            <div class="product" onclick="toggleDetails('vulhoodie')">
+                <img src="https://ik.imagekit.io/negm/vul%20hoodie%20black.png" alt="H-1" class="product-image" loading="lazy">
+                <div class="product-details" id="vulhoodie-details">
+                    <div class="product-name">H-1</div>
                     <div class="product-price">L.E 899</div>
                     <div class="size-options">
                         <select id="vulhoodie-size">
@@ -108,16 +109,16 @@
                         </select>
                     </div>
                     <div class="buttons">
-                        <button onclick="addToCart('vulhoodie')">Add to Cart</button>
-                        <button onclick="buyNow('vulhoodie')">Buy Now</button>
+                        <button onclick="addToCart('vulhoodie'); event.stopPropagation();">Add to Cart</button>
+                        <button onclick="buyNow('vulhoodie'); event.stopPropagation();">Buy Now</button>
                     </div>
                 </div>
             </div>
-            <!-- Product 4: Vulgar Custom Denim -->
-            <div class="product">
-                <img src="https://ik.imagekit.io/negm/vulgar%20denim%20pants.png" alt="Vulgar Custom Denim" class="product-image" loading="lazy">
-                <div class="product-details">
-                    <div class="product-name">Vulgar Custom Denim</div>
+            <!-- Product 4: DP-1 (Vulgar Custom Denim) -->
+            <div class="product" onclick="toggleDetails('denim')">
+                <img src="https://ik.imagekit.io/negm/vulgar%20denim%20pants.png" alt="DP-1" class="product-image" loading="lazy">
+                <div class="product-details" id="denim-details">
+                    <div class="product-name">DP-1</div>
                     <div class="product-price">L.E 799</div>
                     <div class="size-options">
                         <select id="denim-size">
@@ -129,8 +130,8 @@
                         </select>
                     </div>
                     <div class="buttons">
-                        <button onclick="addToCart('denim')">Add to Cart</button>
-                        <button onclick="buyNow('denim')">Buy Now</button>
+                        <button onclick="addToCart('denim'); event.stopPropagation();">Add to Cart</button>
+                        <button onclick="buyNow('denim'); event.stopPropagation();">Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -165,14 +166,18 @@
             notification.classList.add('show');
             setTimeout(() => { notification.classList.remove('show'); }, 3000);
         }
+        function toggleDetails(productType) {
+            const details = document.getElementById(`${productType}-details`);
+            details.classList.toggle('show');
+        }
         function addToCart(productType) { 
             const selectedSize = getSelectedSize(productType); 
             if (!selectedSize) { showNotification('Please select a size.'); return; } 
             let item; 
-            if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'sweatpants') { item = { name: 'Black Basic Vulgar Sweatpants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'vulhoodie') { item = { name: 'Vul Hoodie', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'denim') { item = { name: 'Vulgar Custom Denim', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
+            if (productType === 'jacket') { item = { name: 'LJ-1', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'sweatpants') { item = { name: 'MP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'vulhoodie') { item = { name: 'H-1', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'denim') { item = { name: 'DP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
             cart.push(item); 
             localStorage.setItem('cart', JSON.stringify(cart)); 
             updateCartCount(); 
@@ -182,10 +187,10 @@
             const selectedSize = getSelectedSize(productType); 
             if (!selectedSize) { showNotification('Please select a size.'); return; } 
             let item; 
-            if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'sweatpants') { item = { name: 'Black Basic Vulgar Sweatpants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'vulhoodie') { item = { name: 'Vul Hoodie', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'denim') { item = { name: 'Vulgar Custom Denim', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
+            if (productType === 'jacket') { item = { name: 'LJ-1', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'sweatpants') { item = { name: 'MP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'vulhoodie') { item = { name: 'H-1', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'denim') { item = { name: 'DP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
             cart = [item]; 
             localStorage.setItem('cart', JSON.stringify(cart)); 
             updateCartCount(); 
