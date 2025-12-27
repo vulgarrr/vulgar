@@ -10,4 +10,206 @@
         .brand img { height: 80px; filter: brightness(0) invert(1); }
         nav { display: flex; gap: 20px; }
         nav a { text-decoration: none; color: #ffffff; font-size: 14px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .cart-count {
+        .cart-count { background-color: #ffffff; color: #000000; padding: 2px 6px; border-radius: 50%; font-size: 12px; }
+        .product-section { padding: 120px 20px 40px; text-align: center; }  /* Added top padding to account for fixed header */
+        .products-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .product { max-width: 300px; text-align: center; }
+        .product-image { width: 100%; height: auto; margin-bottom: 20px; }
+        .product-details { margin-bottom: 20px; }
+        .product-name { font-size: 20px; font-weight: 300; margin-bottom: 10px; }
+        .product-price { font-size: 18px; margin-bottom: 20px; }
+        .size-options { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: nowrap; }
+        .size-option { position: relative; }
+        .size-option input { display: none; }
+        .size-option label { display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: linear-gradient(145deg, #000000, #111111); border: 1px solid #ffffff; color: #ffffff; font-size: 16px; font-weight: 300; text-transform: uppercase; border-radius: 50%; cursor: pointer; transition: all 0.4s ease; box-shadow: 0 4px 8px rgba(255,255,255,0.1); }
+        .size-option label:hover { background: linear-gradient(145deg, #222222, #333333); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(255,255,255,0.2); }
+        .size-option input:checked + label { background: #ffffff; color: #000000; border-color: #ffffff; box-shadow: 0 0 15px rgba(255,255,255,0.5); }
+        .buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        button { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 10px 20px; font-size: 14px; cursor: pointer; text-transform: uppercase; border-radius: 8px; box-shadow: 0 2px 4px rgba(255,255,255,0.1); transition: all 0.3s ease; }
+        button:hover { background-color: rgba(255, 255, 255, 0.1); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(255,255,255,0.2); }
+        .cart-section { display: none; padding: 40px 20px; max-width: 800px; margin: 0 auto; background-color: #000000; color: #ffffff; }
+        .cart-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333333; padding-bottom: 20px; }
+        .cart-item img { width: 100px; height: auto; margin-right: 20px; }
+        .cart-item-details { flex-grow: 1; }
+        .quantity-controls { display: flex; align-items: center; gap: 10px; }
+        footer { padding: 10px; background-color: transparent; text-align: center; position: relative; }
+        footer a { color: #ccc; text-decoration: none; font-size: 12px; margin: 0 10px; transition: color 0.3s ease; }
+        footer a:hover { color: #fff; }
+        footer p { margin: 5px 0 0 0; font-size: 10px; color: #999; }
+        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .products-grid { flex-direction: column; align-items: center; gap: 20px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } .size-options { gap: 6px; } .size-option label { width: 55px; height: 55px; font-size: 18px; } footer { flex-direction: column; } footer a { display: block; margin: 5px 0; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand"><a href="index.html"><img src="https://ik.imagekit.io/negm/logo%20for%20the%20website.png" alt="Negm Apparel"></a></div>
+        <nav>
+            <a href="products.html">Shop</a>
+            <a href="#cart" onclick="showCart()">Cart <span id="cart-count" class="cart-count">0</span></a>
+        </nav>
+    </header>
+    <section class="product-section">
+        <div class="products-grid">
+            <!-- Product 1: SRK Leather Jacket -->
+            <div class="product">
+                <img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png" alt="SRK Leather Jacket" class="product-image" loading="lazy">
+                <div class="product-details">
+                    <div class="product-name">SRK Leather Jacket</div>
+                    <div class="product-price">L.E 1499</div>
+                    <div class="size-options">
+                        <div class="size-option">
+                            <input type="radio" id="jacket-size-s" name="jacket-size" value="S">
+                            <label for="jacket-size-s">S</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="jacket-size-m" name="jacket-size" value="M">
+                            <label for="jacket-size-m">M</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="jacket-size-l" name="jacket-size" value="L">
+                            <label for="jacket-size-l">L</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="jacket-size-xl" name="jacket-size" value="XL">
+                            <label for="jacket-size-xl">XL</label>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button onclick="addToCart('jacket')">Add to Cart</button>
+                        <button onclick="buyNow('jacket')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 2: Vulgar Graphic Tee -->
+            <div class="product">
+                <img src="https://ik.imagekit.io/negm/vulgar-graphic-tee.png" alt="Vulgar Graphic Tee" class="product-image" loading="lazy">  <!-- Replace with actual image URL -->
+                <div class="product-details">
+                    <div class="product-name">Vulgar Graphic Tee</div>
+                    <div class="product-price">L.E 499</div>
+                    <div class="size-options">
+                        <div class="size-option">
+                            <input type="radio" id="tee-size-s" name="tee-size" value="S">
+                            <label for="tee-size-s">S</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="tee-size-m" name="tee-size" value="M">
+                            <label for="tee-size-m">M</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="tee-size-l" name="tee-size" value="L">
+                            <label for="tee-size-l">L</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="tee-size-xl" name="tee-size" value="XL">
+                            <label for="tee-size-xl">XL</label>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button onclick="addToCart('tee')">Add to Cart</button>
+                        <button onclick="buyNow('tee')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 3: Vulgar Hoodie -->
+            <div class="product">
+                <img src="https://ik.imagekit.io/negm/vulgar-hoodie.png" alt="Vulgar Hoodie" class="product-image" loading="lazy">  <!-- Replace with actual image URL -->
+                <div class="product-details">
+                    <div class="product-name">Vulgar Hoodie</div>
+                    <div class="product-price">L.E 899</div>
+                    <div class="size-options">
+                        <div class="size-option">
+                            <input type="radio" id="hoodie-size-s" name="hoodie-size" value="S">
+                            <label for="hoodie-size-s">S</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="hoodie-size-m" name="hoodie-size" value="M">
+                            <label for="hoodie-size-m">M</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="hoodie-size-l" name="hoodie-size" value="L">
+                            <label for="hoodie-size-l">L</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="hoodie-size-xl" name="hoodie-size" value="XL">
+                            <label for="hoodie-size-xl">XL</label>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button onclick="addToCart('hoodie')">Add to Cart</button>
+                        <button onclick="buyNow('hoodie')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 4: Vulgar Cargo Pants -->
+            <div class="product">
+                <img src="https://ik.imagekit.io/negm/vulgar-cargo-pants.png" alt="Vulgar Cargo Pants" class="product-image" loading="lazy">  <!-- Replace with actual image URL -->
+                <div class="product-details">
+                    <div class="product-name">Vulgar Cargo Pants</div>
+                    <div class="product-price">L.E 799</div>
+                    <div class="size-options">
+                        <div class="size-option">
+                            <input type="radio" id="pants-size-s" name="pants-size" value="S">
+                            <label for="pants-size-s">S</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="pants-size-m" name="pants-size" value="M">
+                            <label for="pants-size-m">M</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="pants-size-l" name="pants-size" value="L">
+                            <label for="pants-size-l">L</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="pants-size-xl" name="pants-size" value="XL">
+                            <label for="pants-size-xl">XL</label>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button onclick="addToCart('pants')">Add to Cart</button>
+                        <button onclick="buyNow('pants')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="cart" class="cart-section">
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div id="cart-total"></div>
+        <button onclick="clearCart()">Clear Cart</button>
+        <button onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
+        <button onclick="backToShop()">Back to Shop</button>
+    </section>
+    <footer>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="refund.html">Refund & Exchange Policy</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="address.html">Address</a>
+        <a href="shipping.html">Shipping Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="about.html">About Us</a>
+        <p>&copy; 2023 VULGAR. All rights reserved. Website created by Negm. Copyright 2013.</p>
+    </footer>
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        function updateCartCount() { document.getElementById('cart-count').textContent = cart.length; }
+        function getSelectedSize(productType) { const radios = document.querySelectorAll(`input[name="${productType}-size"]:checked`); return radios.length > 0 ? radios[0].value : null; }
+        function addToCart(productType) { 
+            const selectedSize = getSelectedSize(productType); 
+            if (!selectedSize) { alert('Please select a size.'); return; } 
+            let item; 
+            if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'tee') { item = { name: 'Vulgar Graphic Tee', price: 499, image: 'https://ik.imagekit.io/negm/vulgar-graphic-tee.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'hoodie') { item = { name: 'Vulgar Hoodie', price: 899, image: 'https://ik.imagekit.io/negm/vulgar-hoodie.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'pants') { item = { name: 'Vulgar Cargo Pants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar-cargo-pants.png', quantity: 1, size: selectedSize }; } 
+            cart.push(item); 
+            localStorage.setItem('cart', JSON.stringify(cart)); 
+            updateCartCount(); 
+            alert('Added to cart!'); 
+        }
+        function buyNow(productType) { 
+            const selectedSize = getSelectedSize(productType); 
+            if (!selectedSize) { alert('Please select a size.'); return; } 
+            let item; 
+            if (productType === 'jacket') { item = { name: 'SRK Leather Jacket', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'tee') { item = { name: 'Vulgar Graphic Tee', price: 499, image: 'https://ik.imagekit.io/negm/vulgar-graphic-tee.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'hoodie') { item = { name: 'Vulgar Hoodie', price
