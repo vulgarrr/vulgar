@@ -132,6 +132,69 @@
                     </div>
                 </div>
             </div>
+            <!-- Product 5: Black Basic Vulgar Sweatpants -->
+            <div class="product">
+                <img src="https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png" alt="Black Basic Vulgar Sweatpants" class="product-image" loading="lazy">
+                <div class="product-details">
+                    <div class="product-name">Black Basic Vulgar Sweatpants</div>
+                    <div class="product-price">L.E 799</div>
+                    <div class="size-options">
+                        <select id="sweatpants-size">
+                            <option value="">Select Size</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>
+                    <div class="buttons">
+                        <button onclick="addToCart('sweatpants')">Add to Cart</button>
+                        <button onclick="buyNow('sweatpants')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 6: Vul Hoodie -->
+            <div class="product">
+                <img src="https://ik.imagekit.io/negm/vul%20hoodie%20black.png" alt="Vul Hoodie" class="product-image" loading="lazy">
+                <div class="product-details">
+                    <div class="product-name">Vul Hoodie</div>
+                    <div class="product-price">L.E 899</div>
+                    <div class="size-options">
+                        <select id="vulhoodie-size">
+                            <option value="">Select Size</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>
+                    <div class="buttons">
+                        <button onclick="addToCart('vulhoodie')">Add to Cart</button>
+                        <button onclick="buyNow('vulhoodie')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 7: Vulgar Custom Denim -->
+            <div class="product">
+                <img src="https://ik.imagekit.io/negm/vulgar%20denim%20pants.png" alt="Vulgar Custom Denim" class="product-image" loading="lazy">
+                <div class="product-details">
+                    <div class="product-name">Vulgar Custom Denim</div>
+                    <div class="product-price">L.E 799</div>
+                    <div class="size-options">
+                        <select id="denim-size">
+                            <option value="">Select Size</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>
+                    <div class="buttons">
+                        <button onclick="addToCart('denim')">Add to Cart</button>
+                        <button onclick="buyNow('denim')">Buy Now</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <section id="cart" class="cart-section">
@@ -164,10 +227,13 @@
             else if (productType === 'tee') { item = { name: 'Vulgar Graphic Tee', price: 499, image: 'https://ik.imagekit.io/negm/vulgar-graphic-tee.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'hoodie') { item = { name: 'Vulgar Hoodie', price: 899, image: 'https://ik.imagekit.io/negm/vulgar-hoodie.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'pants') { item = { name: 'Vulgar Cargo Pants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar-cargo-pants.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'sweatpants') { item = { name: 'Black Basic Vulgar Sweatpants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'vulhoodie') { item = { name: 'Vul Hoodie', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'denim') { item = { name: 'Vulgar Custom Denim', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
             cart.push(item); 
             localStorage.setItem('cart', JSON.stringify(cart)); 
             updateCartCount(); 
-            alert('Added to cart!'); 
+            alert('Item added to your cart!'); 
         }
         function buyNow(productType) { 
             const selectedSize = getSelectedSize(productType); 
@@ -177,18 +243,5 @@
             else if (productType === 'tee') { item = { name: 'Vulgar Graphic Tee', price: 499, image: 'https://ik.imagekit.io/negm/vulgar-graphic-tee.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'hoodie') { item = { name: 'Vulgar Hoodie', price: 899, image: 'https://ik.imagekit.io/negm/vulgar-hoodie.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'pants') { item = { name: 'Vulgar Cargo Pants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar-cargo-pants.png', quantity: 1, size: selectedSize }; } 
-            cart = [item]; 
-            localStorage.setItem('cart', JSON.stringify(cart)); 
-            updateCartCount(); 
-            window.location.href = 'checkout.html'; 
-        }
-        function showCart() { document.querySelector('.product-section').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
-        function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0; cart.forEach((item, index) => { total += item.price * item.quantity; cartItems.innerHTML += `<div class="cart-item"> <img src="${item.image}" alt="${item.name}"> <div class="cart-item-details"> <div>${item.name} (Size: ${item.size})</div> <div>L.E ${item.price}</div> <div class="quantity-controls"> <button onclick="changeQuantity(${index}, -1)">-</button> <span>${item.quantity}</span> <button onclick="changeQuantity(${index}, 1)">+</button> </div> <button onclick="removeItem(${index})">Remove</button> </div> </div>`; }); cartTotal.innerHTML = `<strong>Total: L.E ${total}</strong>`; }
-        function changeQuantity(index, delta) { cart[index].quantity += delta; if (cart[index].quantity <= 0) { cart.splice(index, 1); } localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
-        function removeItem(index) { cart.splice(index, 1); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
-        function clearCart() { cart = []; localStorage.removeItem('cart'); updateCartCount(); renderCart(); }
-        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block'; }
-        updateCartCount();
-    </script>
-</body>
-</html>
+            else if (productType === 'sweatpants') { item = { name: 'Black Basic Vulgar Sweatpants', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
+            else if (productType === 'vul
