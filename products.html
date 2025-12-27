@@ -20,15 +20,16 @@
         .product-image { width: 100%; height: auto; margin-bottom: 10px; transition: transform 0.4s ease; }
         .product.clicked .product-image { animation: pop 0.4s ease; }
         .product-name { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
-        .product-details { opacity: 0; visibility: hidden; transform: scale(0.8) translateY(20px); transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease; margin-bottom: 20px; }
+        .product-details { opacity: 0; visibility: hidden; transform: scale(0.8) translateY(20px); transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease; margin-bottom: 20px; background-color: rgba(0,0,0,0.8); padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(255,255,255,0.1); }
         .product-details.show { opacity: 1; visibility: visible; transform: scale(1) translateY(0); animation: bounceIn 0.5s ease; }
         .product-details.hide { animation: slideOut 0.5s ease; }
         .product-price { font-size: 16px; margin-bottom: 15px; }
         .size-options { margin-bottom: 15px; }
         select { background-color: #000000; border: 1px solid #ffffff; color: #ffffff; padding: 6px; font-size: 12px; border-radius: 20px; width: 100%; max-width: 180px; cursor: pointer; }
         .buttons { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-        button { background: linear-gradient(145deg, #000000, #222222); border: 1px solid #ffffff; color: #ffffff; padding: 8px 16px; font-size: 12px; cursor: pointer; text-transform: uppercase; border-radius: 25px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(255,255,255,0.1); }
+        button { background: linear-gradient(145deg, #000000, #222222); border: 1px solid #ffffff; color: #ffffff; padding: 10px 20px; font-size: 12px; cursor: pointer; text-transform: uppercase; border-radius: 25px; transition: all 0.3s ease; box-shadow: 0 4px 8px rgba(255,255,255,0.1); min-width: 100px; } /* Increased padding for better touch accessibility */
         button:hover { background: linear-gradient(145deg, #ffffff, #cccccc); color: #000000; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(255,255,255,0.2); }
+        .close-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ffffff; font-size: 18px; cursor: pointer; } /* Close button for accessibility */
         .cart-section { display: none; padding: 40px 20px; max-width: 800px; margin: 0 auto; background-color: #000000; color: #ffffff; }
         .cart-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333333; padding-bottom: 20px; }
         .cart-item img { width: 100px; height: auto; margin-right: 20px; }
@@ -42,7 +43,16 @@
         @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         @keyframes bounceIn { 0% { opacity: 0; transform: scale(0.3) translateY(50px); } 50% { opacity: 1; transform: scale(1.05) translateY(-10px); } 70% { transform: scale(0.9) translateY(5px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes slideOut { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(0.8) translateY(-20px); } }
-        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } footer { flex-direction: row; } } /* Adjusted for mobile, but kept no wrap */
+        @media (max-width: 768px) { 
+            header { padding: 15px; } 
+            nav { gap: 10px; } 
+            .product { max-width: 100%; } 
+            .buttons { flex-direction: column; align-items: center; } 
+            .cart-item { flex-direction: column; text-align: center; } 
+            .cart-item img { margin-right: 0; margin-bottom: 10px; } 
+            footer { flex-direction: row; } 
+            button { padding: 12px 24px; font-size: 14px; } /* Larger buttons for mobile touch */
+        }
     </style>
 </head>
 <body>
@@ -60,6 +70,7 @@
                 <img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png" alt="LJ-1" class="product-image" loading="lazy">
                 <div class="product-name">LJ-1</div>
                 <div class="product-details" id="jacket-details">
+                    <button class="close-btn" onclick="closeDetails('jacket'); event.stopPropagation();">&times;</button>
                     <div class="product-price">L.E 1499</div>
                     <div class="size-options">
                         <select id="jacket-size" onclick="event.stopPropagation();">
@@ -81,6 +92,7 @@
                 <img src="https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png" alt="MP-1" class="product-image" loading="lazy">
                 <div class="product-name">MP-1</div>
                 <div class="product-details" id="sweatpants-details">
+                    <button class="close-btn" onclick="closeDetails('sweatpants'); event.stopPropagation();">&times;</button>
                     <div class="product-price">L.E 799</div>
                     <div class="size-options">
                         <select id="sweatpants-size" onclick="event.stopPropagation();">
@@ -102,6 +114,7 @@
                 <img src="https://ik.imagekit.io/negm/vul%20hoodie%20black.png" alt="H-1" class="product-image" loading="lazy">
                 <div class="product-name">H-1</div>
                 <div class="product-details" id="vulhoodie-details">
+                    <button class="close-btn" onclick="closeDetails('vulhoodie'); event.stopPropagation();">&times;</button>
                     <div class="product-price">L.E 899</div>
                     <div class="size-options">
                         <select id="vulhoodie-size" onclick="event.stopPropagation();">
@@ -123,6 +136,7 @@
                 <img src="https://ik.imagekit.io/negm/vulgar%20denim%20pants.png" alt="DP-1" class="product-image" loading="lazy">
                 <div class="product-name">DP-1</div>
                 <div class="product-details" id="denim-details">
+                    <button class="close-btn" onclick="closeDetails('denim'); event.stopPropagation();">&times;</button>
                     <div class="product-price">L.E 799</div>
                     <div class="size-options">
                         <select id="denim-size" onclick="event.stopPropagation();">
@@ -186,6 +200,11 @@
                 setTimeout(() => { product.classList.remove('clicked'); }, 400);
             }
         }
+        function closeDetails(productType) {
+            const details = document.getElementById(`${productType}-details`);
+            details.classList.add('hide');
+            setTimeout(() => { details.classList.remove('show', 'hide'); }, 500);
+        }
         function addToCart(productType) { 
             const selectedSize = getSelectedSize(productType); 
             if (!selectedSize) { showNotification('Please select a size.'); return; } 
@@ -204,13 +223,4 @@
             if (!selectedSize) { showNotification('Please select a size.'); return; } 
             let item; 
             if (productType === 'jacket') { item = { name: 'LJ-1', price: 1499, image: 'https://ik.imagekit.io/negm/srk%20leather%20jacket.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'sweatpants') { item = { name: 'MP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'vulhoodie') { item = { name: 'H-1', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
-            else if (productType === 'denim') { item = { name: 'DP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
-            cart = [item]; 
-            localStorage.setItem('cart', JSON.stringify(cart)); 
-            updateCartCount(); 
-            window.location.href = 'checkout.html'; 
-        }
-        function showCart() { document.querySelector('.product-section').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
-        function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0
+            else if (product
