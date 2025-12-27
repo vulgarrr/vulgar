@@ -36,14 +36,13 @@
         .quantity-controls { display: flex; align-items: center; gap: 10px; }
         .notification { position: fixed; top: 20px; right: 20px; background-color: #ffffff; color: #000000; padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); font-weight: bold; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; }
         .notification.show { opacity: 1; }
-        footer { padding: 5px; background-color: transparent; text-align: center; position: relative; display: flex; flex-wrap: wrap; justify-content: center; }
-        footer a { color: #ccc; text-decoration: none; font-size: 10px; margin: 0 5px; transition: color 0.3s ease; }
-        footer a:hover { color: #fff; }
-        footer p { margin: 0 5px; font-size: 8px; color: #999; }
+        footer { padding: 5px; background-color: transparent; text-align: center; position: relative; display: flex; justify-content: center; } /* Removed flex-wrap to keep everything in one line */
+        footer a { color: #ccc; text-decoration: none; font-size: 8px; margin: 0 5px; transition: color 0.3s ease; } /* Made font smaller */
+        footer p { margin: 0 5px; font-size: 6px; color: #999; } /* Made font smaller */
         @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         @keyframes bounceIn { 0% { opacity: 0; transform: scale(0.3) translateY(50px); } 50% { opacity: 1; transform: scale(1.05) translateY(-10px); } 70% { transform: scale(0.9) translateY(5px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes slideOut { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(0.8) translateY(-20px); } }
-        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } footer { flex-direction: row; flex-wrap: wrap; } }
+        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .product { max-width: 100%; } .buttons { flex-direction: column; align-items: center; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } footer { flex-direction: row; } } /* Adjusted for mobile, but kept no wrap */
     </style>
 </head>
 <body>
@@ -170,12 +169,18 @@
             setTimeout(() => { notification.classList.remove('show'); }, 3000);
         }
         function toggleDetails(productType) {
+            // Hide all product details first
+            const allDetails = document.querySelectorAll('.product-details');
+            allDetails.forEach(detail => {
+                if (detail.classList.contains('show')) {
+                    detail.classList.add('hide');
+                    setTimeout(() => { detail.classList.remove('show', 'hide'); }, 500);
+                }
+            });
+            // Then show the clicked product's details
             const product = document.querySelector(`[onclick="toggleDetails('${productType}')"]`);
             const details = document.getElementById(`${productType}-details`);
-            if (details.classList.contains('show')) {
-                details.classList.add('hide');
-                setTimeout(() => { details.classList.remove('show', 'hide'); }, 500);
-            } else {
+            if (!details.classList.contains('show')) {
                 details.classList.add('show');
                 product.classList.add('clicked');
                 setTimeout(() => { product.classList.remove('clicked'); }, 400);
@@ -208,4 +213,4 @@
             window.location.href = 'checkout.html'; 
         }
         function showCart() { document.querySelector('.product-section').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
-        function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0; cart.forEach((item, index) => { total += item.price * item.quantity; cartItems.innerHTML += `<div class="cart-item"> <img src="${item.image}" alt="${item.name}"> <div class="cart-item-details"> <div>${item.name} (Size
+        function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0
