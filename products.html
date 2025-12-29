@@ -58,7 +58,7 @@
                 <div class="product-details" id="jacket-details">
                     <div class="product-price">L.E 1499</div>
                     <div class="size-options">
-                        <select id="jacket-size">
+                        <select id="jacket-size" onclick="event.stopPropagation()">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -79,7 +79,7 @@
                 <div class="product-details" id="sweatpants-details">
                     <div class="product-price">L.E 799</div>
                     <div class="size-options">
-                        <select id="sweatpants-size">
+                        <select id="sweatpants-size" onclick="event.stopPropagation()">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -100,7 +100,7 @@
                 <div class="product-details" id="vulhoodie-details">
                     <div class="product-price">L.E 899</div>
                     <div class="size-options">
-                        <select id="vulhoodie-size">
+                        <select id="vulhoodie-size" onclick="event.stopPropagation()">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -121,7 +121,7 @@
                 <div class="product-details" id="denim-details">
                     <div class="product-price">L.E 799</div>
                     <div class="size-options">
-                        <select id="denim-size">
+                        <select id="denim-size" onclick="event.stopPropagation()">
                             <option value="">Select Size</option>
                             <option value="S">S</option>
                             <option value="M">M</option>
@@ -149,6 +149,7 @@
     <!-- Hidden form for Formspree submission -->
     <form id="formspree-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="display: none;">
         <input type="hidden" name="cart" id="cart-data">
+        <input type="hidden" name="total" id="cart-total-data">
         <input type="hidden" name="type" id="purchase-type">
     </form>
     <footer>
@@ -187,8 +188,6 @@
             localStorage.setItem('cart', JSON.stringify(cart)); 
             updateCartCount(); 
             showNotification('Item added to your cart!'); 
-            // Hide the product details after adding to cart
-            document.getElementById(`${productType}-details`).classList.remove('show');
         }
         function buyNow(productType) { 
             const selectedSize = getSelectedSize(productType); 
@@ -198,12 +197,13 @@
             else if (productType === 'sweatpants') { item = { name: 'MP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'vulhoodie') { item = { name: 'H-1', price: 899, image: 'https://ik.imagekit.io/negm/vul%20hoodie%20black.png', quantity: 1, size: selectedSize }; } 
             else if (productType === 'denim') { item = { name: 'DP-1', price: 799, image: 'https://ik.imagekit.io/negm/vulgar%20denim%20pants.png', quantity: 1, size: selectedSize }; } 
-            // Submit to Formspree for buy now
+            // FIX: Calculate total for buy now (single item)
+            const total = item.price * item.quantity;
+            // FIX: Submit to Formspree for buy now with cart data, total, and type
             document.getElementById('cart-data').value = JSON.stringify([item]);
+            document.getElementById('cart-total-data').value = total;
             document.getElementById('purchase-type').value = 'buy_now';
             document.getElementById('formspree-form').submit();
-            // Hide the product details after buy now
-            document.getElementById(`${productType}-details`).classList.remove('show');
         }
         function showCart() { document.querySelector('.product-section').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
         function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0; cart.forEach((item, index) => { total += item.price * item.quantity; cartItems.innerHTML += `<div class="cart-item"> <img src="${item.image}" alt="${item.name}"> <div class="cart-item-details"> <div>${item.name} (Size: ${item.size})</div> <div>L.E ${item.price}</div> <div class="quantity-controls"> <button onclick="changeQuantity(${index}, -1)">-</button> <span>${item.quantity}</span> <button onclick="changeQuantity(${index}, 1)">+</button> </div> <button onclick="removeItem(${index})">Remove</button> </div> </div>`; }); cartTotal.innerHTML = `<strong>Total: L.E ${total}</strong>`; }
@@ -211,9 +211,6 @@
         function removeItem(index) { cart.splice(index, 1); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
         function clearCart() { cart = []; localStorage.removeItem('cart'); updateCartCount(); renderCart(); }
         function proceedToCheckout() {
-            // Submit cart to Formspree
-            document.getElementById('cart-data').value = JSON.stringify(cart);
-            document.getElementById('purchase-type').value = 'checkout';
-            document.getElementById('formspree-form').submit();
-        }
-        function backToShop() { document.querySelector
+            // FIX: Calculate total for the entire cart
+            let total = 0;
+            cart.forEach(item => { total += item.price * item.quantity; });
