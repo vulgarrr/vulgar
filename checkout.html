@@ -14,7 +14,6 @@ body {
     font-size: 14px;
 }
 
-/* HEADER */
 header {
     display: flex;
     justify-content: space-between;
@@ -51,14 +50,12 @@ header .cart-icon img {
     margin-left: 6px;
 }
 
-/* CONTAINER */
 .checkout-container {
     max-width: 1000px;
     margin: 100px auto 60px;
     padding: 20px;
 }
 
-/* CART GRID */
 .cart-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -72,6 +69,7 @@ header .cart-icon img {
     border-radius: 10px;
     padding: 10px;
     text-align: center;
+    position: relative;
 }
 
 .cart-item img {
@@ -91,7 +89,28 @@ header .cart-icon img {
     margin-bottom: 3px;
 }
 
-/* FORM */
+.remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.remove-btn:hover {
+    background: #cc0000;
+}
+
 form {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -136,6 +155,23 @@ form button:hover {
     color: #000;
 }
 
+footer {
+    text-align: center;
+    padding: 15px;
+    font-size: 12px;
+    margin-top: 60px;
+}
+
+footer a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 6px;
+}
+
+footer a:hover { color: #fff; }
+
+footer p { font-size: 10px; color: #999; }
+
 /* RESPONSIVE */
 @media(max-width:768px){
     form {
@@ -151,11 +187,25 @@ form button:hover {
         margin: 80px auto 40px;
         padding: 15px;
     }
+    .cart-item {
+        padding: 8px;
+    }
+    .cart-item-name {
+        font-size: 12px;
+    }
+    .cart-item-size, .cart-item-qty, .cart-item-price {
+        font-size: 10px;
+    }
+    .remove-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
 }
 
 @media(max-width:480px){
     .cart-grid {
-        grid-template-columns: 1fr; /* Single column for very small screens */
+        grid-template-columns: 1fr;
     }
     header .brand img {
         height: 50px;
@@ -174,35 +224,35 @@ form button:hover {
     .cart-item {
         padding: 8px;
     }
+    .cart-item img {
+        margin-bottom: 6px;
+    }
     .cart-item-name {
         font-size: 12px;
     }
     .cart-item-size, .cart-item-qty, .cart-item-price {
         font-size: 10px;
     }
+    .remove-btn {
+        width: 18px;
+        height: 18px;
+        font-size: 8px;
+    }
     form button {
         padding: 10px 15px;
         font-size: 12px;
     }
+    footer {
+        padding: 10px;
+        font-size: 10px;
+    }
+    footer a {
+        margin: 0 4px;
+    }
+    footer p {
+        font-size: 8px;
+    }
 }
-
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 15px;
-    font-size: 12px;
-    margin-top: 60px;
-}
-
-footer a {
-    color: #ccc;
-    text-decoration: none;
-    margin: 0 6px;
-}
-
-footer a:hover { color: #fff; }
-
-footer p { font-size: 10px; color: #999; }
 </style>
 </head>
 <body>
@@ -281,7 +331,7 @@ function updateCart() {
         cartCount.textContent = '0';
         return;
     }
-    cart.forEach(item => {
+    cart.forEach((item, index) => {
         total += item.price * item.quantity;
         const div = document.createElement('div');
         div.className = 'cart-item';
@@ -291,11 +341,18 @@ function updateCart() {
             <div class="cart-item-size">Size: ${item.size}</div>
             <div class="cart-item-qty">Qty: ${item.quantity}</div>
             <div class="cart-item-price">L.E ${item.price * item.quantity}</div>
+            <button class="remove-btn" onclick="removeItem(${index})">×</button>
         `;
         cartItemsDiv.appendChild(div);
     });
     cartTotalDiv.textContent = `Total: L.E ${total}`;
     cartCount.textContent = cart.length;
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCart();
 }
 
 updateCart();
