@@ -21,12 +21,27 @@
         footer a { color: #ccc; text-decoration: none; font-size: 10px; margin: 0 5px; transition: color 0.3s ease; }
         footer a:hover { color: #fff; }
         footer p { margin: 0 5px; font-size: 8px; color: #999; }
-        .cart-section { display: none; padding: 40px 20px; max-width: 800px; margin: 0 auto; background-color: #000000; color: #ffffff; }
-        .cart-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333333; padding-bottom: 20px; }
-        .cart-item img { width: 100px; height: auto; margin-right: 20px; }
-        .cart-item-details { flex-grow: 1; }
-        .quantity-controls { display: flex; align-items: center; gap: 10px; }
-        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .shop-now-btn { top: 70%; padding: 10px 20px; font-size: 14px; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } footer { flex-direction: row; flex-wrap: wrap; } }
+        @media (max-width: 768px) { 
+            header { padding: 15px; } 
+            nav { gap: 10px; } 
+            .brand img { height: 60px; } 
+            nav a { font-size: 12px; } 
+            .shop-now-btn { top: 70%; padding: 10px 20px; font-size: 14px; } 
+            footer { flex-direction: column; align-items: center; } 
+            footer a { margin: 2px 0; } 
+            footer p { margin: 5px 0; } 
+        }
+        @media (max-width: 480px) { 
+            header { padding: 10px; } 
+            .brand img { height: 50px; } 
+            nav { gap: 8px; } 
+            nav a { font-size: 10px; } 
+            .cart-count { font-size: 10px; padding: 1px 4px; } 
+            .shop-now-btn { top: 75%; padding: 8px 16px; font-size: 12px; } 
+            footer { padding: 3px; } 
+            footer a { font-size: 8px; margin: 1px 0; } 
+            footer p { font-size: 6px; margin: 3px 0; } 
+        }
     </style>
 </head>
 <body>
@@ -38,7 +53,7 @@
             <div class="brand"><a href="#product" onclick="goToMain()"><img src="https://ik.imagekit.io/negm/logo%20for%20the%20website.png" alt="Negm Apparel"></a></div>
             <nav>
                 <a href="products.html">Shop</a>
-                <a href="#cart" onclick="showCart()">Cart <span id="cart-count" class="cart-count">0</span></a>
+                <a href="checkout.html">Cart <span id="cart-count" class="cart-count">0</span></a>
             </nav>
         </header>
         <button class="shop-now-btn" onclick="window.location.href='products.html'">Shop Now</button>
@@ -53,25 +68,11 @@
             <p>&copy; 2023 VULGAR. All rights reserved. Website created by Negm. Copyright 2013.</p>
         </footer>
     </section>
-    <section id="cart" class="cart-section">
-        <h2>Your Cart</h2>
-        <div id="cart-items"></div>
-        <div id="cart-total"></div>
-        <button onclick="clearCart()">Clear Cart</button>
-        <button onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
-        <button onclick="backToShop()">Back to Shop</button>
-    </section>
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         function updateCartCount() { document.getElementById('cart-count').textContent = cart.length; }
-        function showCart() { document.querySelector('.video-banner').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
-        function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0; cart.forEach((item, index) => { total += item.price * item.quantity; cartItems.innerHTML += `<div class="cart-item"> <img src="${item.image}" alt="${item.name}"> <div class="cart-item-details"> <div>${item.name} (Size: ${item.size})</div> <div>L.E ${item.price}</div> <div class="quantity-controls"> <button onclick="changeQuantity(${index}, -1)">-</button> <span>${item.quantity}</span> <button onclick="changeQuantity(${index}, 1)">+</button> </div> <button onclick="removeItem(${index})">Remove</button> </div> </div>`; }); cartTotal.innerHTML = `<strong>Total: L.E ${total}</strong>`; }
-        function changeQuantity(index, delta) { cart[index].quantity += delta; if (cart[index].quantity <= 0) { cart.splice(index, 1); } localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
-        function removeItem(index) { cart.splice(index, 1); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
-        function clearCart() { cart = []; localStorage.removeItem('cart'); updateCartCount(); renderCart(); }
-        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.video-banner').style.display = 'block'; }
-        function goToMain() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.video-banner').style.display = 'block'; }
+        function goToMain() { /* No action needed, already on main */ }
         updateCartCount();
     </script>
 </body>
-</html>ign-item
+</html>
