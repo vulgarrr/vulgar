@@ -58,7 +58,7 @@ header .cart-icon img {
 
 .cart-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 20px;
     margin-bottom: 40px;
 }
@@ -74,19 +74,29 @@ header .cart-icon img {
 
 .cart-item img {
     width: 100%;
-    height: auto;
+    height: 180px;
+    object-fit: cover;
     margin-bottom: 8px;
     border-radius: 6px;
+    background-color: #222;
 }
 
 .cart-item-name {
     font-size: 14px;
     margin-bottom: 5px;
+    font-weight: 500;
 }
 
 .cart-item-size, .cart-item-qty, .cart-item-price {
     font-size: 12px;
     margin-bottom: 3px;
+    color: #ccc;
+}
+
+.cart-item-price {
+    font-weight: bold;
+    color: #fff;
+    margin-top: 8px;
 }
 
 .remove-btn {
@@ -137,6 +147,7 @@ form .full-width {
     border-radius: 6px;
     font-family: 'Helvetica', sans-serif;
     font-size: 14px;
+    box-sizing: border-box;
 }
 
 form button {
@@ -178,7 +189,8 @@ footer p { font-size: 10px; color: #999; }
         grid-template-columns: 1fr;
     }
     .cart-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
     header {
         padding: 15px 20px;
@@ -190,22 +202,26 @@ footer p { font-size: 10px; color: #999; }
     .cart-item {
         padding: 8px;
     }
+    .cart-item img {
+        height: 140px;
+    }
     .cart-item-name {
         font-size: 12px;
     }
     .cart-item-size, .cart-item-qty, .cart-item-price {
-        font-size: 10px;
+        font-size: 11px;
     }
     .remove-btn {
-        width: 20px;
-        height: 20px;
-        font-size: 10px;
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
     }
 }
 
 @media(max-width:480px){
     .cart-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
     }
     header .brand img {
         height: 50px;
@@ -218,29 +234,47 @@ footer p { font-size: 10px; color: #999; }
         font-size: 10px;
         padding: 1px 5px;
     }
+    .checkout-container {
+        margin: 70px auto 30px;
+        padding: 12px;
+    }
     .checkout-container h1 {
-        font-size: 18px;
+        font-size: 20px;
+        margin-bottom: 20px;
     }
     .cart-item {
-        padding: 8px;
+        padding: 10px;
     }
     .cart-item img {
-        margin-bottom: 6px;
+        height: 200px;
+        margin-bottom: 10px;
     }
     .cart-item-name {
-        font-size: 12px;
+        font-size: 13px;
+        margin-bottom: 6px;
     }
-    .cart-item-size, .cart-item-qty, .cart-item-price {
-        font-size: 10px;
+    .cart-item-size, .cart-item-qty {
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+    .cart-item-price {
+        font-size: 13px;
+        margin-top: 6px;
     }
     .remove-btn {
-        width: 18px;
-        height: 18px;
-        font-size: 8px;
+        width: 26px;
+        height: 26px;
+        font-size: 14px;
+        top: 8px;
+        right: 8px;
     }
     form button {
-        padding: 10px 15px;
-        font-size: 12px;
+        padding: 12px 15px;
+        font-size: 13px;
+    }
+    .form-group input, form textarea {
+        padding: 12px;
+        font-size: 14px;
     }
     footer {
         padding: 10px;
@@ -248,9 +282,24 @@ footer p { font-size: 10px; color: #999; }
     }
     footer a {
         margin: 0 4px;
+        display: inline-block;
+        padding: 4px 0;
     }
     footer p {
         font-size: 8px;
+        margin-top: 8px;
+    }
+}
+
+@media(max-width:360px){
+    .checkout-container {
+        padding: 10px;
+    }
+    .cart-item img {
+        height: 180px;
+    }
+    header .brand img {
+        height: 45px;
     }
 }
 </style>
@@ -273,7 +322,7 @@ footer p { font-size: 10px; color: #999; }
     <div class="cart-grid" id="cart-items">
         <!-- JS populates cart items -->
     </div>
-    <div id="cart-total" style="text-align:right; font-weight:bold; margin-bottom:30px;"></div>
+    <div id="cart-total" style="text-align:right; font-weight:bold; margin-bottom:30px; font-size:18px;"></div>
 
     <form id="checkout-form">
         <div class="form-group">
@@ -326,7 +375,7 @@ function updateCart() {
     cartItemsDiv.innerHTML = '';
     let total = 0;
     if (cart.length === 0) {
-        cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+        cartItemsDiv.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding:40px;">Your cart is empty.</p>';
         cartTotalDiv.textContent = 'Total: L.E 0';
         cartCount.textContent = '0';
         return;
@@ -335,8 +384,18 @@ function updateCart() {
         total += item.price * item.quantity;
         const div = document.createElement('div');
         div.className = 'cart-item';
+        
+        // Handle image URL - check multiple possible properties
+        let imageUrl = item.image || item.img || item.imageUrl || item.src || '';
+        
+        // If no image found, use a placeholder
+        if (!imageUrl) {
+            console.warn('No image found for item:', item);
+            imageUrl = 'https://via.placeholder.com/200x200/111111/ffffff?text=No+Image';
+        }
+        
         div.innerHTML = `
-            <img src="${item.image}" alt="${item.name}">
+            <img src="${imageUrl}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/200x200/111111/ffffff?text=No+Image'">
             <div class="cart-item-name">${item.name}</div>
             <div class="cart-item-size">Size: ${item.size}</div>
             <div class="cart-item-qty">Qty: ${item.quantity}</div>
