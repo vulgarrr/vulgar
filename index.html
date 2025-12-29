@@ -17,23 +17,16 @@
         .cart-count { background-color: #ffffff; color: #000000; padding: 2px 6px; border-radius: 50%; font-size: 12px; }
         .shop-now-btn { position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0, 0, 0, 0.9); border: 1px solid #ffffff; color: #ffffff; padding: 12px 24px; font-size: 16px; cursor: pointer; text-transform: uppercase; border-radius: 8px; box-shadow: 0 2px 4px rgba(255,255,255,0.1); transition: all 0.3s ease; z-index: 12; }
         .shop-now-btn:hover { background-color: rgba(255, 255, 255, 0.1); transform: translate(-50%, -50%) translateY(-2px); box-shadow: 0 4px 8px rgba(255,255,255,0.2); }
-        .product-section { padding: 40px 20px; text-align: center; }
-        .products-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-        .product { max-width: 300px; text-align: center; }
-        .product-image { width: 100%; height: auto; margin-bottom: 20px; }
-        .product-details { margin-bottom: 20px; }
-        .product-name { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; }  /* Luxury Sins style for jacket code and BEST SELLER */
-        .product-price { font-size: 18px; margin-bottom: 20px; }
+        footer { position: absolute; bottom: 0; left: 0; right: 0; z-index: 11; padding: 5px; background-color: transparent; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; }
+        footer a { color: #ccc; text-decoration: none; font-size: 10px; margin: 0 5px; transition: color 0.3s ease; }
+        footer a:hover { color: #fff; }
+        footer p { margin: 0 5px; font-size: 8px; color: #999; }
         .cart-section { display: none; padding: 40px 20px; max-width: 800px; margin: 0 auto; background-color: #000000; color: #ffffff; }
         .cart-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333333; padding-bottom: 20px; }
         .cart-item img { width: 100px; height: auto; margin-right: 20px; }
         .cart-item-details { flex-grow: 1; }
         .quantity-controls { display: flex; align-items: center; gap: 10px; }
-        footer { padding: 5px; background-color: transparent; text-align: center; position: relative; display: flex; flex-wrap: wrap; justify-content: center; }
-        footer a { color: #ccc; text-decoration: none; font-size: 10px; margin: 0 5px; transition: color 0.3s ease; }
-        footer a:hover { color: #fff; }
-        footer p { margin: 0 5px; font-size: 8px; color: #999; }
-        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .shop-now-btn { top: 70%; padding: 10px 20px; font-size: 14px; } .products-grid { flex-direction: column; align-items: center; gap: 20px; } .product { max-width: 100%; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } footer { flex-direction: row; flex-wrap: wrap; } }
+        @media (max-width: 768px) { header { padding: 15px; } nav { gap: 10px; } .shop-now-btn { top: 70%; padding: 10px 20px; font-size: 14px; } .cart-item { flex-direction: column; text-align: center; } .cart-item img { margin-right: 0; margin-bottom: 10px; } footer { flex-direction: row; flex-wrap: wrap; } }
     </style>
 </head>
 <body>
@@ -49,17 +42,16 @@
             </nav>
         </header>
         <button class="shop-now-btn" onclick="window.location.href='products.html'">Shop Now</button>
-    </section>
-    <section id="product" class="product-section">
-        <div class="products-grid">
-            <div class="product">
-                <img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png" alt="SRK Leather Jacket" class="product-image" loading="lazy">
-                <div class="product-details">
-                    <div class="product-name">LJ-1<br>BEST SELLER</div>
-                    <div class="product-price">L.E 1499</div>
-                </div>
-            </div>
-        </div>
+        <footer>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="refund.html">Refund & Exchange Policy</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="address.html">Address</a>
+            <a href="shipping.html">Shipping Policy</a>
+            <a href="terms.html">Terms & Conditions</a>
+            <a href="about.html">About Us</a>
+            <p>&copy; 2023 VULGAR. All rights reserved. Website created by Negm. Copyright 2013.</p>
+        </footer>
     </section>
     <section id="cart" class="cart-section">
         <h2>Your Cart</h2>
@@ -69,26 +61,16 @@
         <button onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
         <button onclick="backToShop()">Back to Shop</button>
     </section>
-    <footer>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="refund.html">Refund & Exchange Policy</a>
-        <a href="contact.html">Contact Us</a>
-        <a href="address.html">Address</a>
-        <a href="shipping.html">Shipping Policy</a>
-        <a href="terms.html">Terms & Conditions</a>
-        <a href="about.html">About Us</a>
-        <p>&copy; 2023 VULGAR. All rights reserved. Website created by Negm. Copyright 2013.</p>
-    </footer>
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         function updateCartCount() { document.getElementById('cart-count').textContent = cart.length; }
-        function showCart() { document.querySelector('.product-section').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
+        function showCart() { document.querySelector('.video-banner').style.display = 'none'; document.querySelector('.cart-section').style.display = 'block'; renderCart(); }
         function renderCart() { const cartItems = document.getElementById('cart-items'); const cartTotal = document.getElementById('cart-total'); cartItems.innerHTML = ''; let total = 0; cart.forEach((item, index) => { total += item.price * item.quantity; cartItems.innerHTML += `<div class="cart-item"> <img src="${item.image}" alt="${item.name}"> <div class="cart-item-details"> <div>${item.name} (Size: ${item.size})</div> <div>L.E ${item.price}</div> <div class="quantity-controls"> <button onclick="changeQuantity(${index}, -1)">-</button> <span>${item.quantity}</span> <button onclick="changeQuantity(${index}, 1)">+</button> </div> <button onclick="removeItem(${index})">Remove</button> </div> </div>`; }); cartTotal.innerHTML = `<strong>Total: L.E ${total}</strong>`; }
         function changeQuantity(index, delta) { cart[index].quantity += delta; if (cart[index].quantity <= 0) { cart.splice(index, 1); } localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
         function removeItem(index) { cart.splice(index, 1); localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); renderCart(); }
         function clearCart() { cart = []; localStorage.removeItem('cart'); updateCartCount(); renderCart(); }
-        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block'; }
-        function goToMain() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.product-section').style.display = 'block'; }
+        function backToShop() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.video-banner').style.display = 'block'; }
+        function goToMain() { document.querySelector('.cart-section').style.display = 'none'; document.querySelector('.video-banner').style.display = 'block'; }
         updateCartCount();
     </script>
 </body>
