@@ -4,11 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shop - VULGAR</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Goudy+Old+Style&display=swap" rel="stylesheet">
-
 <style>
-/* ---------------- GLOBAL ---------------- */
 body {
     font-family: 'Goudy Old Style', serif;
     font-weight: bold;
@@ -18,7 +15,7 @@ body {
     font-size: 14px;
 }
 
-/* ---------------- HEADER ---------------- */
+/* HEADER */
 header {
     position: fixed;
     top: 0;
@@ -36,6 +33,7 @@ header {
     height: 70px;
     display: block;
     filter: brightness(0) invert(1);
+    cursor: pointer;
 }
 
 nav {
@@ -44,10 +42,15 @@ nav {
     gap: 20px;
 }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
+.cart-icon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.cart-icon img {
+    width: 28px;
+    height: 28px;
 }
 
 .cart-count {
@@ -56,9 +59,10 @@ nav a {
     padding: 2px 6px;
     border-radius: 50%;
     font-size: 12px;
+    margin-left: 6px;
 }
 
-/* ---------------- PRODUCTS ---------------- */
+/* PRODUCTS */
 .product-section {
     padding: 140px 30px 60px;
 }
@@ -78,15 +82,7 @@ nav a {
         flex-wrap: wrap;
         padding: 15px 20px;
     }
-    nav {
-        margin-top: 10px;
-        justify-content: flex-start;
-        gap: 15px;
-        width: 100%;
-    }
-    .brand img {
-        height: 60px;
-    }
+    .brand img { height: 60px; }
 }
 
 .product {
@@ -140,7 +136,7 @@ button:hover {
     color: #000;
 }
 
-/* ---------------- NOTIFICATION ---------------- */
+/* NOTIFICATION */
 .notification {
     position: fixed;
     bottom: 20px;
@@ -163,18 +159,37 @@ button:hover {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 60px;
+    font-size: 12px;
+}
+
+footer a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 6px;
+}
+
+footer a:hover { color: #fff; }
+
+footer p { font-size: 10px; color: #999; }
 </style>
 </head>
-
 <body>
 
 <header>
-    <div class="brand">
+    <div class="brand" onclick="window.location.href='index.html'">
         <img src="https://ik.imagekit.io/negm/logo%20for%20the%20website.png" alt="VULGAR">
     </div>
     <nav>
-        <a href="products.html">Shop</a>
-        <a href="#cart">Cart <span id="cart-count" class="cart-count">0</span></a>
+        <div class="cart-icon" onclick="showCart()">
+            <img src="https://img.icons8.com/material-outlined/48/ffffff/shopping-bag--v1.png" alt="Cart">
+            <span id="cart-count" class="cart-count">0</span>
+        </div>
     </nav>
 </header>
 
@@ -242,6 +257,17 @@ button:hover {
 
 <div id="notification" class="notification"></div>
 
+<footer>
+    <a href="privacy.html">Privacy</a>
+    <a href="refund.html">Refund</a>
+    <a href="contact.html">Contact</a>
+    <a href="address.html">Address</a>
+    <a href="shipping.html">Shipping</a>
+    <a href="terms.html">Terms</a>
+    <a href="about.html">About</a>
+    <p>&copy; 2023 VULGAR. All rights reserved.</p>
+</footer>
+
 <script>
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -255,15 +281,15 @@ function toggleDetails(id) {
 
 function addToCart(name, price, id) {
     const size = document.getElementById(id + '-size').value;
-    if (!size) return notify('⚠️ Please select a size');
-
-    cart.push({ name, price, size, quantity: 1 });
+    if (!size) return notify('Please select a size');
+    const existing = cart.find(item => item.name === name && item.size === size);
+    if (existing) existing.quantity += 1;
+    else cart.push({ name, price, size, quantity: 1, image: document.querySelector(`#${id}-details`).previousElementSibling.src });
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    notify('✅ Added to cart!');
+    notify('Item added to cart');
 }
 
-// Modern Buy Now: fast redirect with storage flush
 function buyNow(name, price, id) {
     addToCart(name, price, id);
     setTimeout(() => {
@@ -271,12 +297,15 @@ function buyNow(name, price, id) {
     }, 50);
 }
 
-// Modern toast notification
+function showCart() {
+    window.location.href = 'checkout.html';
+}
+
 function notify(msg) {
     const n = document.getElementById('notification');
     n.textContent = msg;
     n.classList.add('show');
-    setTimeout(() => n.classList.remove('show'), 2500);
+    setTimeout(() => n.classList.remove('show'), 2000);
 }
 
 updateCartCount();
@@ -284,3 +313,4 @@ updateCartCount();
 
 </body>
 </html>
+
