@@ -8,34 +8,44 @@
 <link href="https://fonts.googleapis.com/css2?family=Goudy+Old+Style&display=swap" rel="stylesheet">
 
 <style>
+/* ---------------- GLOBAL ---------------- */
 body {
     font-family: 'Goudy Old Style', serif;
     font-weight: bold;
     margin: 0;
-    background: #000;
+    background-color: #000;
     color: #fff;
+    font-size: 14px;
 }
 
+/* ---------------- HEADER ---------------- */
 header {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 20px;
+    padding: 20px 30px;
     display: flex;
+    align-items: center;          /* FIX: vertical alignment */
     justify-content: space-between;
-    background: rgba(0,0,0,.9);
-    z-index: 10;
+    background: rgba(0,0,0,0.9);
+    z-index: 100;
 }
 
 .brand img {
-    height: 80px;
+    height: 70px;
+    display: block;
     filter: brightness(0) invert(1);
+}
+
+nav {
+    display: flex;
+    align-items: center;          /* FIX: nav alignment */
+    gap: 20px;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
-    margin-left: 20px;
     text-transform: uppercase;
 }
 
@@ -47,8 +57,9 @@ nav a {
     font-size: 12px;
 }
 
+/* ---------------- PRODUCTS ---------------- */
 .product-section {
-    padding: 140px 20px;
+    padding: 140px 30px 60px;
 }
 
 .products-grid {
@@ -60,7 +71,6 @@ nav a {
 @media (min-width: 769px) {
     .products-grid { grid-template-columns: repeat(3, 1fr); }
 }
-
 @media (max-width: 768px) {
     .products-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -76,27 +86,37 @@ nav a {
 }
 
 .product-name {
+    margin: 10px 0;
     font-size: 18px;
     cursor: pointer;
-    margin: 10px 0;
 }
 
 .product-details {
     display: none;
+    margin-top: 10px;
 }
 
 .product-details.show {
     display: block;
 }
 
-select, button {
+select {
+    background: #000;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 6px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+button {
     background: #000;
     border: 1px solid #fff;
     color: #fff;
     padding: 8px;
-    margin-top: 10px;
     width: 100%;
     cursor: pointer;
+    margin-bottom: 8px;
 }
 
 button:hover {
@@ -104,6 +124,7 @@ button:hover {
     color: #000;
 }
 
+/* ---------------- NOTIFICATION ---------------- */
 .notification {
     position: fixed;
     top: 20px;
@@ -113,6 +134,7 @@ button:hover {
     padding: 10px 20px;
     border-radius: 6px;
     display: none;
+    z-index: 999;
 }
 </style>
 </head>
@@ -121,38 +143,70 @@ button:hover {
 
 <header>
     <div class="brand">
-        <img src="https://ik.imagekit.io/negm/logo%20for%20the%20website.png">
+        <img src="https://ik.imagekit.io/negm/logo%20for%20the%20website.png" alt="VULGAR">
     </div>
     <nav>
-        <a href="#">Shop</a>
-        <a href="#cart" onclick="showCart()">Cart <span id="cart-count" class="cart-count">0</span></a>
+        <a href="products.html">Shop</a>
+        <a href="#cart">Cart <span id="cart-count" class="cart-count">0</span></a>
     </nav>
 </header>
 
 <section class="product-section">
 <div class="products-grid">
 
-<!-- PRODUCT -->
+<!-- LJ-1 -->
 <div class="product">
-
-<img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png"
-     class="product-image"
-     onclick="toggleDetails('jacket')">
-
+<img src="https://ik.imagekit.io/negm/srk%20leather%20jacket.png" class="product-image" onclick="toggleDetails('jacket')">
 <div class="product-name" onclick="toggleDetails('jacket')">LJ-1</div>
-
 <div class="product-details" id="jacket-details">
-
 <div>L.E 1499</div>
-
 <select id="jacket-size" onclick="event.stopPropagation()">
-<option value="">Select Size</option>
-<option>S</option><option>M</option><option>L</option><option>XL</option>
+<option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option>
 </select>
+<button onclick="addToCart('LJ-1',1499,'jacket');event.stopPropagation()">Add to Cart</button>
+<button onclick="buyNow('LJ-1',1499,'jacket');event.stopPropagation()">Buy Now</button>
+</div>
+</div>
 
-<button onclick="addToCart('jacket'); event.stopPropagation()">Add to Cart</button>
-<button onclick="buyNow('jacket'); event.stopPropagation()">Buy Now</button>
+<!-- MP-1 -->
+<div class="product">
+<img src="https://ik.imagekit.io/negm/vulgar%20black%20sweatpants%20basic.png" class="product-image" onclick="toggleDetails('sweatpants')">
+<div class="product-name" onclick="toggleDetails('sweatpants')">MP-1</div>
+<div class="product-details" id="sweatpants-details">
+<div>L.E 799</div>
+<select id="sweatpants-size" onclick="event.stopPropagation()">
+<option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option>
+</select>
+<button onclick="addToCart('MP-1',799,'sweatpants');event.stopPropagation()">Add to Cart</button>
+<button onclick="buyNow('MP-1',799,'sweatpants');event.stopPropagation()">Buy Now</button>
+</div>
+</div>
 
+<!-- H-1 -->
+<div class="product">
+<img src="https://ik.imagekit.io/negm/vul%20hoodie%20black.png" class="product-image" onclick="toggleDetails('hoodie')">
+<div class="product-name" onclick="toggleDetails('hoodie')">H-1</div>
+<div class="product-details" id="hoodie-details">
+<div>L.E 899</div>
+<select id="hoodie-size" onclick="event.stopPropagation()">
+<option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option>
+</select>
+<button onclick="addToCart('H-1',899,'hoodie');event.stopPropagation()">Add to Cart</button>
+<button onclick="buyNow('H-1',899,'hoodie');event.stopPropagation()">Buy Now</button>
+</div>
+</div>
+
+<!-- DP-1 -->
+<div class="product">
+<img src="https://ik.imagekit.io/negm/vulgar%20denim%20pants.png" class="product-image" onclick="toggleDetails('denim')">
+<div class="product-name" onclick="toggleDetails('denim')">DP-1</div>
+<div class="product-details" id="denim-details">
+<div>L.E 799</div>
+<select id="denim-size" onclick="event.stopPropagation()">
+<option value="">Select Size</option><option>S</option><option>M</option><option>L</option><option>XL</option>
+</select>
+<button onclick="addToCart('DP-1',799,'denim');event.stopPropagation()">Add to Cart</button>
+<button onclick="buyNow('DP-1',799,'denim');event.stopPropagation()">Buy Now</button>
 </div>
 </div>
 
@@ -172,24 +226,18 @@ function toggleDetails(id) {
     document.getElementById(id + '-details').classList.toggle('show');
 }
 
-function addToCart(type) {
-    const size = document.getElementById(type + '-size').value;
-    if (!size) return notify('Select size first');
+function addToCart(name, price, id) {
+    const size = document.getElementById(id + '-size').value;
+    if (!size) return notify('Please select a size');
 
-    cart.push({
-        name: 'LJ-1',
-        price: 1499,
-        size: size,
-        quantity: 1
-    });
-
+    cart.push({ name, price, size, quantity: 1 });
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
     notify('Added to cart');
 }
 
-function buyNow(type) {
-    addToCart(type);
+function buyNow(name, price, id) {
+    addToCart(name, price, id);
     window.location.href = 'checkout.html';
 }
 
