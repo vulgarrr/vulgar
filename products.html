@@ -25,10 +25,11 @@ header {
     width: 100%;
     padding: 20px 30px;
     display: flex;
-    align-items: center;          /* FIX: vertical alignment */
+    align-items: center;
     justify-content: space-between;
     background: rgba(0,0,0,0.9);
     z-index: 100;
+    flex-wrap: nowrap;
 }
 
 .brand img {
@@ -39,7 +40,7 @@ header {
 
 nav {
     display: flex;
-    align-items: center;          /* FIX: nav alignment */
+    align-items: center;
     gap: 20px;
 }
 
@@ -73,6 +74,19 @@ nav a {
 }
 @media (max-width: 768px) {
     .products-grid { grid-template-columns: repeat(2, 1fr); }
+    header {
+        flex-wrap: wrap;
+        padding: 15px 20px;
+    }
+    nav {
+        margin-top: 10px;
+        justify-content: flex-start;
+        gap: 15px;
+        width: 100%;
+    }
+    .brand img {
+        height: 60px;
+    }
 }
 
 .product {
@@ -83,6 +97,7 @@ nav a {
 .product-image {
     width: 100%;
     cursor: pointer;
+    loading: lazy;
 }
 
 .product-name {
@@ -117,6 +132,7 @@ button {
     width: 100%;
     cursor: pointer;
     margin-bottom: 8px;
+    transition: all 0.2s ease;
 }
 
 button:hover {
@@ -127,14 +143,25 @@ button:hover {
 /* ---------------- NOTIFICATION ---------------- */
 .notification {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
     right: 20px;
     background: #fff;
     color: #000;
-    padding: 10px 20px;
-    border-radius: 6px;
-    display: none;
-    z-index: 999;
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 9999;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 </style>
 </head>
@@ -228,24 +255,28 @@ function toggleDetails(id) {
 
 function addToCart(name, price, id) {
     const size = document.getElementById(id + '-size').value;
-    if (!size) return notify('Please select a size');
+    if (!size) return notify('⚠️ Please select a size');
 
     cart.push({ name, price, size, quantity: 1 });
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    notify('Added to cart');
+    notify('✅ Added to cart!');
 }
 
+// Modern Buy Now: fast redirect with storage flush
 function buyNow(name, price, id) {
     addToCart(name, price, id);
-    window.location.href = 'checkout.html';
+    setTimeout(() => {
+        window.location.href = 'checkout.html';
+    }, 50);
 }
 
+// Modern toast notification
 function notify(msg) {
     const n = document.getElementById('notification');
     n.textContent = msg;
-    n.style.display = 'block';
-    setTimeout(() => n.style.display = 'none', 2000);
+    n.classList.add('show');
+    setTimeout(() => n.classList.remove('show'), 2500);
 }
 
 updateCartCount();
