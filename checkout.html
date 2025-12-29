@@ -144,6 +144,46 @@ form button:hover {
     .cart-grid {
         grid-template-columns: 1fr 1fr;
     }
+    header {
+        padding: 15px 20px;
+    }
+    .checkout-container {
+        margin: 80px auto 40px;
+        padding: 15px;
+    }
+}
+
+@media(max-width:480px){
+    .cart-grid {
+        grid-template-columns: 1fr; /* Single column for very small screens */
+    }
+    header .brand img {
+        height: 50px;
+    }
+    header .cart-icon img {
+        width: 24px;
+        height: 24px;
+    }
+    .cart-count {
+        font-size: 10px;
+        padding: 1px 5px;
+    }
+    .checkout-container h1 {
+        font-size: 18px;
+    }
+    .cart-item {
+        padding: 8px;
+    }
+    .cart-item-name {
+        font-size: 12px;
+    }
+    .cart-item-size, .cart-item-qty, .cart-item-price {
+        font-size: 10px;
+    }
+    form button {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
 }
 
 /* FOOTER */
@@ -235,6 +275,12 @@ const cartTotalDiv = document.getElementById('cart-total');
 function updateCart() {
     cartItemsDiv.innerHTML = '';
     let total = 0;
+    if (cart.length === 0) {
+        cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+        cartTotalDiv.textContent = 'Total: L.E 0';
+        cartCount.textContent = '0';
+        return;
+    }
     cart.forEach(item => {
         total += item.price * item.quantity;
         const div = document.createElement('div');
@@ -285,4 +331,3 @@ document.getElementById('checkout-form').addEventListener('submit', function(e){
 
 </body>
 </html>
-
