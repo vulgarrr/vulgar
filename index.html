@@ -143,16 +143,28 @@
         }
         .cart-item {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
             margin-bottom: 10px;
             padding-bottom: 10px;
             border-bottom: 1px solid #333;
         }
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .cart-item .details {
+            flex: 1;
+        }
         .cart-item .name {
             font-weight: bold;
+            display: block;
         }
         .cart-item .price {
             color: #ccc;
+            display: block;
         }
         .cart-total {
             font-size: 18px;
@@ -239,6 +251,10 @@
                 width: 300px;
                 right: -300px;
             }
+            .cart-item img {
+                width: 40px;
+                height: 40px;
+            }
             footer a {
                 font-size: 8px; /* Smaller on mobile */
                 margin: 0 5px;
@@ -277,6 +293,10 @@
             .cart-sidebar {
                 width: 280px;
                 right: -280px;
+            }
+            .cart-item img {
+                width: 35px;
+                height: 35px;
             }
             footer {
                 padding: 4px;
@@ -369,8 +389,11 @@
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'cart-item';
                     itemDiv.innerHTML = `
-                        <span class="name">${item.name}</span>
-                        <span class="price">$${item.price}</span>
+                        <img src="${item.image || 'placeholder.jpg'}" alt="${item.name}">
+                        <div class="details">
+                            <span class="name">${item.name}</span>
+                            <span class="price">$${item.price}</span>
+                        </div>
                     `;
                     cartItemsDiv.appendChild(itemDiv);
                     total += parseFloat(item.price);
