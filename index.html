@@ -186,6 +186,21 @@
         .checkout-btn:hover {
             background-color: #ccc;
         }
+        .empty-cart-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            font-size: 16px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .empty-cart-btn:hover {
+            background-color: #ccc;
+        }
         .overlay {
             position: fixed;
             top: 0;
@@ -352,7 +367,9 @@
         <p>&copy; 2023 VULGAR. All rights reserved. Website created by Negm. Copyright 2013.</p>
     </footer>
     <script>
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // Clear cart on page load to start empty
+        localStorage.removeItem('cart');
+        let cart = [];
         
         function updateCartCount() {
             document.getElementById('cart-count').textContent = cart.length;
@@ -383,7 +400,7 @@
             cartItemsDiv.innerHTML = '';
             let total = 0;
             if (cart.length === 0) {
-                cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+                cartItemsDiv.innerHTML = '<button class="empty-cart-btn" onclick="window.location.href=\'products.html\'">Shop Now</button>';
             } else {
                 cart.forEach(item => {
                     const itemDiv = document.createElement('div');
